@@ -36,6 +36,7 @@ class Home extends Component {
           </View>
           <FlatList
             // numColumns={4} 
+            contentContainerStyle={{ marginLeft: -5 }}
             horizontal={true}
             data={this.props.stories}
             renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
@@ -49,6 +50,7 @@ class Home extends Component {
           </View>
           <View>
             <FlatList
+              contentContainerStyle={{ marginLeft: -5 }}
               numColumns={4}
               data={this.props.stories}
               renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
@@ -79,13 +81,6 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
-  container: {
-
-    paddingRight: 5,
-    paddingLeft: 5,
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
   WallpagerStyle: {
     height: 150,
     width: 400,
@@ -93,6 +88,7 @@ const styles = StyleSheet.create({
   IconStyle: {
     height: 50,
     width: 50,
+    marginTop: 5
   },
   TextStyle: {
     paddingTop: 5,
@@ -105,8 +101,12 @@ const styles = StyleSheet.create({
   },
   StyleRankDaily: {
     alignItems: 'center',
-    marginLeft: 80,
+    marginLeft: 65,
     marginRight: 20,
+    border: '.1px solid rgb(194, 192, 192)',
+    borderRadius: 5,
+    width: 80,
+    height: 80
   }
 });
 

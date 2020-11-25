@@ -35,15 +35,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 12,
     marginRight: 5,
+    borderRadius: 5,
+    border: '.1px solid rgb(194, 192, 192)'
   },
   TextStyle: {
     alignItems: 'center',
     color: 'black',
+    fontWeight: 500
   },
   ImageStyle: {
     width: 75,
     height: 100,
-
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomWidth: .1,
+    borderBottomColor: 'rgb(194, 192, 192)'
   }
 });
 export default StoryItemHome;
