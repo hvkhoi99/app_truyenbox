@@ -1,0 +1,16 @@
+expo init name-app
+----------------------------------------------------
+fix Running Scripts is disabled on this System :
+1 open powershell with adminatior
+2 set-ExecutionPolicy RemoteSigned
+3 Choose Yes
+----------------------------------------------------
+install :
+npm install @react-navigation/native
+expo install react-native-gesture-handler react-native-reanimated react-native-screens @react-native-community/masked-view
+npm install @react-navigation/stack
+npm install @react-navigation/bottom-tabs
+npm install @react-navigation/material-top-tabs react-native-tab-view
+npm install react-native-animatable
+npm install react-native-vector-icons
+----------------------------------------------------
