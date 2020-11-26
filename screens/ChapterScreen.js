@@ -14,7 +14,7 @@ class ChapterScreen extends Component {
     render() {
         // console.log(this.props.images);
         const listImages = this.props.images.map((img, index) => {
-            return <Image key={index} style={styles.ImageStyle} source={img.path_image} />
+            return <Image key={index} style={styles.ImageStyle} source={{ uri: img.path_image }} />
         })
         return (
             <ScrollView>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListStories } from '../actions/story';
 import dailyImage from '../assets/daily.png';
@@ -29,36 +29,42 @@ class Home extends Component {
             <Text>Daily</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <View style={styles.TextStyle}>
-            <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Mới Cập Nhật</Text>
-            <Text>Xem thêm</Text>
-          </View>
-          <FlatList
-            // numColumns={4} 
-            contentContainerStyle={{ marginLeft: -5 }}
-            horizontal={true}
-            data={this.props.stories}
-            renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
-              onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
-          />
-        </View>
-        <View>
-          <View style={styles.TextStyle}>
-            <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Đề Xuất</Text>
-            <Text>Xem thêm</Text>
-          </View>
+        {this.props.stories.length !== 0 ? (
           <View>
-            <FlatList
-              contentContainerStyle={{ marginLeft: -5 }}
-              numColumns={4}
-              data={this.props.stories}
-              renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
-                onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
-            />
+            <View>
+              <View style={styles.TextStyle}>
+                <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Mới Cập Nhật</Text>
+                <Text>Xem thêm</Text>
+              </View>
+              <FlatList
+                // numColumns={4} 
+                contentContainerStyle={{ marginLeft: -4 }}
+                horizontal={true}
+                data={this.props.stories}
+                renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
+                  onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+              />
+            </View>
+            <View>
+              <View style={styles.TextStyle}>
+                <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Đề Xuất</Text>
+                <Text>Xem thêm</Text>
+              </View>
+              <View>
+                <FlatList
+                  contentContainerStyle={{ marginLeft: -4 }}
+                  numColumns={4}
+                  data={this.props.stories}
+                  renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
+                    onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+                />
 
+              </View>
+            </View>
           </View>
-        </View>
+        ) : (
+            <ActivityIndicator />
+          )}
       </ScrollView>
     );
   }
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 65,
     marginRight: 20,
-    border: '.1px solid rgb(194, 192, 192)',
+    // border: '.1px solid rgb(194, 192, 192)',
     borderRadius: 5,
     width: 80,
     height: 80

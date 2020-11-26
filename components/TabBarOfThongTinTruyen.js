@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     Title: {
-        fontWeight: 500
+        // fontWeight: 500
     },
     columnCDV: {
         display: 'flex',

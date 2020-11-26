@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
     Texttitle: {
         marginTop: 15,
         textTransform: "uppercase",
-        fontWeight: '700',
+        // fontWeight: '700',
     },
     TextInfo: {
         marginTop: 30,
         marginLeft: 20,
         textTransform: "uppercase",
-        fontWeight: '400',
+        // fontWeight: '400',
     }
 })
 export default CaNhanScreen;

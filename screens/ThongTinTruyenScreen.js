@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListAuthor } from '../actions/author';
-import { getListCategories } from '../actions/category';
+import { getListCategoriesByStoryId } from '../actions/category';
 import { getChaptersByStoryId } from '../actions/story';
 import TabBarOfThongTinTruyen from './../components/TabBarOfThongTinTruyen';
 
@@ -29,7 +29,7 @@ class ThongTinTruyenScreen extends Component {
                     <Text style={styles.Texttitle}>{story.name}</Text>
                 </View>
                 <View style={styles.InfoStyle}>
-                    <Image style={styles.ImageStyle} source={story.path_image} />
+                    <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
                     <View>
                         <Text style={styles.InfoTextStyle}>Tên tác giả : <Text style={styles.TextCate}>{this.props.authors.name}</Text></Text>
                         <Text style={styles.InfoTextStyle}>Trạng thái : <Text style={styles.TextCate}>{story.status}</Text></Text>
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(getListAuthor(story_id))
         },
         getCategories: (story_id) => {
-            dispatch(getListCategories(story_id))
+            dispatch(getListCategoriesByStoryId(story_id))
         },
         getChapters: (story_id) => {
             dispatch(getChaptersByStoryId(story_id))
@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
     Texttitle: {
         marginTop: 5,
         textTransform: "uppercase",
-        fontWeight: '700',
+        // fontWeight: '700',
     },
     TextDocTruyenStyle: {
         marginTop: 5,
         textTransform: "uppercase",
-        fontWeight: '700',
+        // fontWeight: '700',
         color: 'white'
     },
     ImageStyle: {

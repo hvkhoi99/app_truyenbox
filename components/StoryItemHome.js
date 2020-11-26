@@ -4,12 +4,14 @@ import LinesEllipsis from 'react-lines-ellipsis';
 class StoryItemHome extends Component {
   render() {
     const { story, onPressXayDung } = this.props;
+    const maxlimit = 8;
+
     return (
       <TouchableOpacity onPress={onPressXayDung}>
         <View style={styles.container}>
-          <Image style={styles.ImageStyle} source={story.path_image} />
+          <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
           <View>
-            <Text style={styles.TextStyle}>
+            {/* <Text style={styles.TextStyle}>
               <LinesEllipsis
                 text={story.name}
                 maxLine='1'
@@ -17,6 +19,12 @@ class StoryItemHome extends Component {
                 trimRight
                 basedOn='letters'
               />
+              {story.name}
+            </Text> */}
+            <Text style={styles.TextStyle}>
+              {((story.name).length > maxlimit) ?
+                (((story.name).substring(0, maxlimit - 3)) + '...') :
+                story.name}
             </Text>
           </View>
         </View>
@@ -33,15 +41,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
-    marginLeft: 12,
+    marginLeft: 10,
     marginRight: 5,
     borderRadius: 5,
-    border: '.1px solid rgb(194, 192, 192)'
+    // border: '.1px solid rgb(194, 192, 192)'
   },
   TextStyle: {
     alignItems: 'center',
     color: 'black',
-    fontWeight: 500
+    // fontWeight: 500
   },
   ImageStyle: {
     width: 75,
@@ -49,7 +57,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomWidth: .1,
-    borderBottomColor: 'rgb(194, 192, 192)'
+    // borderBottomColor: 'rgb(194, 192, 192)'
   }
 });
 export default StoryItemHome;
