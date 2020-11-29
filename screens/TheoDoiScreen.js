@@ -10,21 +10,21 @@ class TheoDoiScreen extends Component {
         return (
             <ScrollView>
                 <Tab.Navigator
-                sceneContainerStyle={{
-                    backgroundColor:'',
-                }}
-                tabBarOptions={{
-                    scrollEnabled : true,
-                    style : {
-                        elevation : 0,
-                        marginBottom : 10,
-                        height :40,
-                    },
+                    sceneContainerStyle={{
+                        backgroundColor: '',
+                    }}
+                    tabBarOptions={{
+                        scrollEnabled: true,
+                        style: {
+                            elevation: 0,
+                            marginBottom: 10,
+                            height: 40,
+                        },
 
-                    tabStyle: {width :187,borderWidth:0},
-                }}>
-                <Tab.Screen name="Đang Theo Dõi" component={DangTheoDoi} />
-                <Tab.Screen name="Lịch Sử" component={LichSu} />
+                        tabStyle: { width: 187, borderWidth: 0 },
+                    }}>
+                    <Tab.Screen name="Đang Theo Dõi" component={DangTheoDoi} />
+                    <Tab.Screen name="Lịch Sử" component={LichSu} />
                 </Tab.Navigator>
             </ScrollView>
 

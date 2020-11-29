@@ -8,10 +8,10 @@ import TabBarOfThongTinTruyen from './../components/TabBarOfThongTinTruyen';
 
 
 
-class ThongTinTruyenScreen extends Component {
+class ThongTinTruyenScreen1 extends Component {
 
     componentDidMount() {
-        const story_id = this.props.route.params.story.id;
+        const story_id = this.props.route.params.story.story_id;
         this.props.getAuthor(story_id);
         this.props.getCategories(story_id);
         this.props.getChapters(story_id)
@@ -28,7 +28,7 @@ class ThongTinTruyenScreen extends Component {
                 {story !== 0 ? (
                     <View>
                         <View style={styles.container}>
-                            <Text style={styles.Texttitle}>Tên: {story.name}</Text>
+                            <Text style={styles.Texttitle}>Tên: {story.name_story}</Text>
                         </View>
                         <View style={styles.InfoStyle}>
                             <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThongTinTruyenScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ThongTinTruyenScreen1)
 
 
 const styles = StyleSheet.create({

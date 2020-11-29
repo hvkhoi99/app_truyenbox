@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-class StoryItemChiTiet extends Component {
+class StoryItemChiTiet1 extends Component {
 
     render() {
         // console.log(this.props.cateId);
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
         marginLeft: 1
     }
 });
-export default StoryItemChiTiet;
+export default StoryItemChiTiet1;

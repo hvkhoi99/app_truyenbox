@@ -13,6 +13,7 @@ import TheLoaiScreen from './screens/TheLoaiScreen';
 import TheoDoiScreen from './screens/TheoDoiScreen';
 import ThongTinTruyenScreen from './screens/ThongTinTruyenScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ThongTinTruyenScreen1 from './screens/ThongTinTruyenScreen1';
 
 const Stack = createStackNavigator();
 function HomeTab() {
@@ -22,6 +23,7 @@ function HomeTab() {
       <Stack.Screen name="Ranking" component={RankingScreen} />
       <Stack.Screen name="Daily" component={DailyyyScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
+      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );
@@ -32,6 +34,8 @@ function TheoDoiTab() {
     <Stack.Navigator>
       <Stack.Screen name="Theo Dõi" component={TheoDoiScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
+      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
+
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );
@@ -41,6 +45,8 @@ function TheLoaiTab() {
     <Stack.Navigator>
       <Stack.Screen name="Thể Loại" component={TheLoaiScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
+      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
+
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );

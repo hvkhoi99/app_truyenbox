@@ -1,8 +1,7 @@
-
-const storiesInitialState = []
-const stories = (state = storiesInitialState, action) => {
+const dailyInitialState = []
+const daily = (state = dailyInitialState, action) => {
     switch (action.type) {
-        case 'GET_STORIES':
+        case 'GET_STORIES_DAILY':
             state = action.stories;
             return [...state];
         default:
@@ -10,4 +9,4 @@ const stories = (state = storiesInitialState, action) => {
     }
 }
 
-export default stories;
+export default daily;
