@@ -43,13 +43,27 @@ class ThongTinTruyenScreen extends Component {
 
                         {/* onPressChapter={() => navigation.navigate('Chapter')} */}
                         <TabBarOfThongTinTruyen chapters={this.props.chapters} navigation={navigation} story={story} />
-                        <TouchableOpacity onPress={() => navigation.navigate("Chapter")}>
-                            <View style={styles.containerDocTruyen}>
-                                <Text style={styles.TextDocTruyenStyle}>
-                                    Đọc Truyện
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                        }}>
+                            <TouchableOpacity>
+                                <View style={styles.containerYeuThich}>
+                                    <Text style={styles.TextYeuThichStyle}>
+                                        Theo Dõi
                             </Text>
-                            </View>
-                        </TouchableOpacity>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("Chapter")}>
+                                <View style={styles.containerDocTruyen}>
+                                    <Text style={styles.TextDocTruyenStyle}>
+                                        Đọc Truyện
+                            </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 ) : (
                         <ActivityIndicator />
@@ -94,6 +108,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         height: 30,
     },
+    containerYeuThich: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        height: 30,
+    },
     Texttitle: {
         marginTop: 5,
         textTransform: "uppercase",
@@ -103,7 +122,18 @@ const styles = StyleSheet.create({
         marginTop: 5,
         textTransform: "uppercase",
         // fontWeight: '700',
-        color: 'white'
+        color: 'white',
+        marginLeft :50,
+        marginRight :50,
+    },
+    TextYeuThichStyle: {
+        marginTop: 5,
+        textTransform: "uppercase",
+        //fontWeight: '700',
+        color: 'black',
+        alignItems :'center',
+        marginLeft :55,
+        marginRight :60,
     },
     ImageStyle: {
         width: 130,

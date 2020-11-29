@@ -21,6 +21,18 @@ class ChapterScreen extends Component {
                 <View style={styles.container}>
                     {listImages}
                 </View>
+                <View style={styles.ViewStyle}>
+                    <TouchableOpacity>
+                        <Text style={styles.StyleBackNext}>
+                            BACK
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={styles.StyleBackNext}>
+                            NEXT
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         );
     }
@@ -39,6 +51,20 @@ const styles = StyleSheet.create({
         marginTop: 7,
 
     },
+    ViewStyle : {
+        paddingTop :5,
+        paddingBottom : 5,
+        flexDirection :'row',
+        alignItems :'center',
+        height : 60,
+        backgroundColor:'black'
+    },
+    StyleBackNext: {
+        alignItems :'center',
+        marginLeft :80,
+        marginRight :80,
+        color :'white',
+      },
 })
 
 const mapStateToProps = (state) => {

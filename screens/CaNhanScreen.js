@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, FlatList, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 class CaNhanScreen extends Component {
     render() {
+        const {navigation} =this.props;
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -21,7 +22,7 @@ class CaNhanScreen extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
                     <View style={styles.ViewBtn}>
                         <Text style={styles.Texttitle}>
                             Đăng Xuất
@@ -41,18 +42,19 @@ const styles = StyleSheet.create({
     ViewBtn: {
         marginTop: 20,
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'white',
     },
     Texttitle: {
         marginTop: 15,
         textTransform: "uppercase",
-        // fontWeight: '700',
+        //fontWeight: '700',
     },
     TextInfo: {
         marginTop: 30,
         marginLeft: 20,
         textTransform: "uppercase",
-        // fontWeight: '400',
+        //fontWeight: '400',
     }
 })
 export default CaNhanScreen;
