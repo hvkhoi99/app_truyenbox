@@ -32,7 +32,7 @@ class ThongTinTruyenScreen1 extends Component {
                         </View>
                         <View style={styles.InfoStyle}>
                             <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
-                            <View>
+                            <View style={styles.rightContain}>
                                 <Text style={styles.InfoTextStyle}>Tác giả : <Text style={styles.TextCate}>{this.props.authors.name}</Text></Text>
                                 <Text style={styles.InfoTextStyle}>Trạng thái : <Text style={styles.TextCate}>{story.status}</Text></Text>
                                 <Text style={styles.InfoTextStyle}>Thể loại : {listCates}</Text>
@@ -125,6 +125,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(208, 208, 214)',
         borderRadius: 5,
         marginLeft: 1,
+    },
+    rightContain: {
+        width: 200
     }
 })
 

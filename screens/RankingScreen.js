@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import SearchBar from '../components/SearchBar';
-import { FlatList, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Week from './RankingTabView/Week';
+import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
+import SearchBar from '../components/SearchBar';
+import Day from './RankingTabView/Day';
 import Month from './RankingTabView/Month';
-import Year from './RankingTabView/Year';
+import Week from './RankingTabView/Week';
 class RankingScreen extends Component {
 
     render() {
@@ -26,9 +26,9 @@ class RankingScreen extends Component {
 
                         tabStyle: { width: 130, borderWidth: 0 },
                     }}>
+                    <Tab.Screen name="BXH Ngày" component={Day} />
                     <Tab.Screen name="BXH Tuần" component={Week} />
                     <Tab.Screen name="BXH Tháng" component={Month} />
-                    <Tab.Screen name="BXH Năm" component={Year} />
                 </Tab.Navigator>
             </ScrollView>
 

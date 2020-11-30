@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { FlatList, View } from 'react-native';
 import StoryItemChiTiet from '../../components/StoryItemChiTiet';
-import { FlatList, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-class Year extends Component {
+class Day extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,4 +35,4 @@ class Year extends Component {
     }
 }
 
-export default Year;
+export default Day;
