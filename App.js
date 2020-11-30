@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { LogBox} from 'react-native'
 import { Provider } from 'react-redux';
 import store from './reducers/store';
 import CaNhanScreen from './screens/CaNhanScreen';
@@ -14,9 +15,19 @@ import TheoDoiScreen from './screens/TheoDoiScreen';
 import ThongTinTruyenScreen from './screens/ThongTinTruyenScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThongTinTruyenScreen1 from './screens/ThongTinTruyenScreen1';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createStackNavigator();
-function HomeTab() {
+function HomeTab({ navigation, route }) {
+  if (route.state && route.state.routes[route.state.index].name === "Chapter") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else {
+    navigation.setOptions({ tabBarVisible: true })
+  }
   return (
     <Stack.Navigator>
       <Stack.Screen name="Trang Chủ" component={Home} />
@@ -29,7 +40,16 @@ function HomeTab() {
   );
 }
 
-function TheoDoiTab() {
+function TheoDoiTab({ navigation, route }) {
+  if (route.state && route.state.routes[route.state.index].name === "Chapter") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else {
+    navigation.setOptions({ tabBarVisible: true })
+  }
   return (
     <Stack.Navigator>
       <Stack.Screen name="Theo Dõi" component={TheoDoiScreen} />
@@ -40,7 +60,16 @@ function TheoDoiTab() {
     </Stack.Navigator>
   );
 }
-function TheLoaiTab() {
+function TheLoaiTab({ navigation, route }) {
+  if (route.state && route.state.routes[route.state.index].name === "Chapter") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
+    navigation.setOptions({ tabBarVisible: false })
+  }
+  else {
+    navigation.setOptions({ tabBarVisible: true })
+  }
   return (
     <Stack.Navigator>
       <Stack.Screen name="Thể Loại" component={TheLoaiScreen} />
@@ -57,6 +86,7 @@ function CaNhanTab() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Cá Nhân" component={CaNhanScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 }
@@ -74,6 +104,8 @@ const color = {
 
 const Tab = createBottomTabNavigator();
 function App() {
+  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreAllLogs();
   return (
     <Provider store={store}>
       <NavigationContainer>

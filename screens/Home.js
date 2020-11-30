@@ -6,6 +6,7 @@ import dailyImage from '../assets/daily.png';
 import rankImage from '../assets/rank.png';
 import SearchBar from '../components/SearchBar';
 import StoryItemHome from '../components/StoryItemHome';
+
 class Home extends Component {
 
 
