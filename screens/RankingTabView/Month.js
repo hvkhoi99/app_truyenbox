@@ -13,7 +13,7 @@ class Month extends Component {
     render() {
         const { navigation } = this.props;
         // const { StoryArray } = this.state;
-        console.log(this.props.storiesRankMonth)
+        // console.log(this.props.storiesRankMonth)
         return (
             <View >
                 {this.props.storiesRankMonth !== 0 ? (

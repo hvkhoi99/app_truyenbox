@@ -20,7 +20,7 @@ class ThongTinTruyenScreen extends Component {
     render() {
         const lastIndex = this.props.chapters.length - 1;
         const chapter_id = (lastIndex !== -1 ? this.props.chapters[lastIndex].id : 1)
-        console.log(chapter_id);
+        // console.log(chapter_id);
         const { navigation } = this.props;
         const { story } = this.props.route.params;
         const listCates = this.props.categories.map((cate, index) => {

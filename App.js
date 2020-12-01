@@ -1,7 +1,10 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { Component } from 'react';
+import { ActivityIndicator } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 // import { LogBox } from 'react-native'
 import { Provider } from 'react-redux';
 import store from './reducers/store';
@@ -9,14 +12,12 @@ import CaNhanScreen from './screens/CaNhanScreen';
 import ChapterScreen from './screens/ChapterScreen';
 import DailyyyScreen from './screens/DailyyyScreen';
 import Home from './screens/Home';
+import LoginScreen from './screens/LoginScreen';
 import RankingScreen from './screens/RankingScreen';
 import TheLoaiScreen from './screens/TheLoaiScreen';
 import TheoDoiScreen from './screens/TheoDoiScreen';
 import ThongTinTruyenScreen from './screens/ThongTinTruyenScreen';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ThongTinTruyenScreen1 from './screens/ThongTinTruyenScreen1';
-import LoginScreen from './screens/LoginScreen';
-import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 function HomeTab({ navigation, route }) {
@@ -100,7 +101,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      userData: [],
+      currentScreen: ""
     }
   }
 
@@ -108,9 +110,11 @@ export default class App extends Component {
     try {
       const value = await AsyncStorage.getItem('userLogin');
       if (value !== null) {
-        this.setState({ list: JSON.parse(value) })
+        this.setState({ userData: JSON.parse(value) });
+        this.setState({ currentScreen: "Cá Nhân" });
       } else {
-        this.setState({ list: [] })
+        this.setState({ userData: [] });
+        this.setState({ currentScreen: "Login" });
       }
     }
     catch (error) {
@@ -119,8 +123,9 @@ export default class App extends Component {
   }
 
   CaNhanTab = () => {
+
     return (
-      (this.state.list.length !== 0) ? (
+      (this.state.userData.length !== 0) ? (
         <Stack.Navigator>
           <Stack.Screen name="Cá Nhân" component={CaNhanScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -134,35 +139,39 @@ export default class App extends Component {
   }
 
   render() {
+    // console.log(this.state.userData)
+    console.log(this.state.currentScreen)
     // LogBox.ignoreLogs(['Warning: ...']);
     // LogBox.ignoreAllLogs();
     return (
-      <Provider store={store}>
-        <NavigationContainer>
-          <Tab.Navigator>
-            <Tab.Screen options={{
-              tabBarIcon: ({ focused }) => (
-                <Icon name="ios-home" size={30} color={focused ? color.active : color.inactive} />
-              )
-            }} name="Trang Chủ" component={HomeTab} />
-            <Tab.Screen options={{
-              tabBarIcon: ({ focused }) => (
-                <Icon name="ios-heart" size={30} color={focused ? color.active : color.inactive} />
-              )
-            }} name="Theo Dõi" component={TheoDoiTab} />
-            <Tab.Screen options={{
-              tabBarIcon: ({ focused }) => (
-                <Icon name="ios-albums" size={30} color={focused ? color.active : color.inactive} />
-              )
-            }} name="Thể Loại" component={TheLoaiTab} />
-            <Tab.Screen options={{
-              tabBarIcon: ({ focused }) => (
-                <Icon name="ios-person" size={30} color={focused ? color.active : color.inactive} />
-              )
-            }} name="Cá Nhân" component={this.CaNhanTab} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </Provider>
+      (this.state.currentScreen !== "") ? (
+        <Provider store={store}>
+          <NavigationContainer>
+            <Tab.Navigator>
+              <Tab.Screen options={{
+                tabBarIcon: ({ focused }) => (
+                  <Icon name="ios-home" size={30} color={focused ? color.active : color.inactive} />
+                )
+              }} name="Trang Chủ" component={HomeTab} />
+              <Tab.Screen options={{
+                tabBarIcon: ({ focused }) => (
+                  <Icon name="ios-heart" size={30} color={focused ? color.active : color.inactive} />
+                )
+              }} name="Theo Dõi" component={TheoDoiTab} />
+              <Tab.Screen options={{
+                tabBarIcon: ({ focused }) => (
+                  <Icon name="ios-albums" size={30} color={focused ? color.active : color.inactive} />
+                )
+              }} name="Thể Loại" component={TheLoaiTab} />
+              <Tab.Screen options={{
+                tabBarIcon: ({ focused }) => (
+                  <Icon name="ios-person" size={30} color={focused ? color.active : color.inactive} />
+                )
+              }} name={this.state.currentScreen} component={this.CaNhanTab} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </Provider>
+        ) : (<ActivityIndicator/>)
     )
   }
 }

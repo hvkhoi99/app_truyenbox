@@ -5,17 +5,6 @@ import { getStoriesByCategoryId5 } from '../../actions/story';
 import StoryItemChiTiet from '../../components/StoryItemChiTiet';
 
 class Cate_Action extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            StoryArray: [
-                { id: 1, name: 'Doremon 1', type: 'Hành Động', watch: 6553, like: 2 },
-                { id: 2, name: 'Doremon 2', type: 'Hoạt Hình', watch: 2995, like: 3 },
-                { id: 3, name: 'Doremon 3', type: 'Viễn Tưởng', watch: 1234, like: 111 },
-
-            ]
-        }
-    }
 
     componentDidMount() {
         this.props.getStoriesByCategoryId(9);
@@ -29,7 +18,7 @@ class Cate_Action extends Component {
                     <FlatList
                         numColumns={1}
                         data={this.props.storiesByCateId}
-                        renderItem={({ item }) => <StoryItemChiTiet onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} story={item} keyExtractor={item => `${item.id}`}
+                        renderItem={({ item }) => <StoryItemChiTiet name={item.name} onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} story={item} keyExtractor={item => `${item.id}`}
                         />}
                     />
                 {/* ) : (

@@ -6,16 +6,16 @@ class CaNhanScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: []
+            userData: []
         }
     }
     componentDidMount = async () => {
         try {
             const value = await AsyncStorage.getItem('userLogin');
             if (value !== null) {
-                this.setState({ list: JSON.parse(value) })
+                this.setState({ userData: JSON.parse(value) })
             } else {
-                this.setState({ list: [] })
+                this.setState({ userData: [] })
             }
         }
         catch (error) {
@@ -27,6 +27,7 @@ class CaNhanScreen extends Component {
         try {
             await AsyncStorage.removeItem('isLogin');
             await AsyncStorage.removeItem('userLogin');
+            window.location.reload();
             this.props.navigation.navigate('Login');
         }
         catch(error) {
@@ -38,7 +39,7 @@ class CaNhanScreen extends Component {
         const { navigation } = this.props;
         return (
             <ScrollView>
-                {/* {this.state.list.length !== 0 ? ( */}
+                {/* {this.state.userData.length !== 0 ? ( */}
                 <View>
                     <View style={styles.container}>
                         <Text style={styles.Texttitle}>
@@ -46,10 +47,10 @@ class CaNhanScreen extends Component {
                     </Text>
                     </View>
                     <View style={styles.viewInfor}>
-                        <Text style={styles.TextInfo}>TÊN: <Text style={styles.infoUser}>{this.state.list.name}</Text></Text>
+                        <Text style={styles.TextInfo}>TÊN: <Text style={styles.infoUser}>{this.state.userData.name}</Text></Text>
                     </View>
                     <View style={styles.viewInfor}>
-                        <Text style={styles.TextInfo}>Email: <Text style={styles.infoUser}>{this.state.list.email}</Text></Text>
+                        <Text style={styles.TextInfo}>Email: <Text style={styles.infoUser}>{this.state.userData.email}</Text></Text>
                     </View>
                     <TouchableOpacity>
                         <View style={styles.ViewBtn}>

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     textInfor: {
         backgroundColor: 'rgb(208, 208, 214)',
         borderRadius: 5,
-        marginLeft: 1
+        marginLeft: 1,
+        
     }
 });
 export default StoryItemChiTiet;

@@ -25,7 +25,7 @@ import rankDay from './rankDay'
 import rankWeek from './rankWeek'
 import rankMonth from './rankMonth'
 import storiesDeXuat from './storiesDeXuat'
-
+import getStoriesFollow from './follows'
 
 const AppReducers = combineReducers({
     stories,
@@ -52,7 +52,8 @@ const AppReducers = combineReducers({
     rankDay,
     rankWeek,
     rankMonth,
-    storiesDeXuat
+    storiesDeXuat,
+    getStoriesFollow
 });
 
 const rootReducer = (state, action) => {

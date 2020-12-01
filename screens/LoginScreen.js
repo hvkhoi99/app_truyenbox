@@ -2,8 +2,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
 import React, { Component } from 'react';
 import { ActivityIndicator, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-// import logoImg from '../webLogo.png';
-import RNRestart from 'react-native-restart';
 import { connect } from 'react-redux';
 import { isLoginTrue } from '../actions/login';
 import fbImage from '../assets/facebook.png';
@@ -21,7 +19,7 @@ class LoginScreen extends Component {
             errMsg: "",
             userInput: '',
             passInput: '',
-            list: []
+            userData: []
         };
     }
 
@@ -29,9 +27,9 @@ class LoginScreen extends Component {
         try {
             const value = await AsyncStorage.getItem('userLogin');
             if (value !== null) {
-                this.setState({ list: JSON.parse(value) })
+                this.setState({ userData: JSON.parse(value) })
             } else {
-                this.setState({ list: [] })
+                this.setState({ userData: [] })
             }
         }
         catch (error) {
@@ -57,10 +55,12 @@ class LoginScreen extends Component {
         }).then(async response => {
             if (response.data.status === 200) {
                 try {
-                    // await AsyncStorage.setItem('isLogin', true);
+                    await AsyncStorage.setItem('isLogin', 'true');
                     await AsyncStorage.setItem('userLogin', JSON.stringify(response.data.data));
-                    { (this.state.list.length !== 0) ? this.props.navigation.navigate('Trang Chủ') : <ActivityIndicator /> }
-                    RNRestart.Restart();
+                    // RNRestart.Restart();
+                    { (this.state.userData.length !== 0) ? this.props.navigation.navigate('Trang Chủ') : <ActivityIndicator /> }
+                    // this.props.navigation.navigate('Trang Chủ')
+                    window.location.reload();
                 } catch (error) {
                     console.log(error)
                 }
@@ -122,7 +122,10 @@ class LoginScreen extends Component {
                     <Text style={{ marginLeft: 10, }}>Mật khẩu</Text>
                 </View>
                 <View style={styles.ViewInputStyle}>
-                    <TextInput style={styles.InputStyle} onChangeText={this.handleChangePassInput} value={this.state.passInput} />
+                    <TextInput
+                        secureTextEntry
+                        keyboardType="default"
+                        style={styles.InputStyle} onChangeText={this.handleChangePassInput} value={this.state.passInput} />
                 </View>
                 <View>
                     <Text style={{
@@ -145,7 +148,7 @@ class LoginScreen extends Component {
                         color: 'red',
                         display: 'flex',
                         justifyContent: 'center',
-                        marginTop: -15,
+                        marginTop: 5,
                         paddingBottom: 5
                     }}>{this.state.errMsg}</Text>
                 </View>
@@ -216,12 +219,14 @@ const styles = StyleSheet.create({
         width: 350,
     },
     TextDangNhap: {
-        height: 30,
-        width: 100,
+        height: 50,
+        width: 150,
         backgroundColor: 'black',
         display: 'flex',
-        justifyContent: 'center',
-        paddingTop: 5,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        paddingHorizontal: 30,
+        paddingVertical: 15,
         textTransform: "uppercase",
         fontWeight: '700',
         color: 'white',
