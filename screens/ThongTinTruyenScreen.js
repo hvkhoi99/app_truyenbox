@@ -18,6 +18,9 @@ class ThongTinTruyenScreen extends Component {
     }
 
     render() {
+        const lastIndex = this.props.chapters.length - 1;
+        const chapter_id = (lastIndex !== -1 ? this.props.chapters[lastIndex].id : 1)
+        console.log(chapter_id);
         const { navigation } = this.props;
         const { story } = this.props.route.params;
         const listCates = this.props.categories.map((cate, index) => {
@@ -56,7 +59,7 @@ class ThongTinTruyenScreen extends Component {
                             </Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigation.navigate("Chapter")}>
+                            <TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter_id })}>
                                 <View style={styles.containerDocTruyen}>
                                     <Text style={styles.TextDocTruyenStyle}>
                                         Đọc Truyện
@@ -123,17 +126,17 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         // fontWeight: '700',
         color: 'white',
-        marginLeft :50,
-        marginRight :50,
+        marginLeft: 50,
+        marginRight: 50,
     },
     TextYeuThichStyle: {
         marginTop: 5,
         textTransform: "uppercase",
         //fontWeight: '700',
         color: 'black',
-        alignItems :'center',
-        marginLeft :55,
-        marginRight :60,
+        alignItems: 'center',
+        marginLeft: 55,
+        marginRight: 60,
     },
     ImageStyle: {
         width: 130,

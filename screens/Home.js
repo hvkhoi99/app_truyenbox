@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListStories } from '../actions/story';
+import { getListStoriesDeXuat } from '../actions/storyDeXuat';
 import dailyImage from '../assets/daily.png';
 import rankImage from '../assets/rank.png';
+import { logCurrentStorage } from '../components/logCurrentStorage';
 import SearchBar from '../components/SearchBar';
 import StoryItemHome from '../components/StoryItemHome';
 
@@ -12,11 +14,15 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.getStories();
+    this.props.getStoriesDeXuat(8);
+    logCurrentStorage();
   }
 
   render() {
+    // console.log(this.props.storiesDeXuat)
     const { navigation } = this.props;
     return (
+
       <ScrollView>
         <SearchBar />
         <Image style={styles.WallpagerStyle} source={{ uri: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/dc9a94d0-a984-4f3f-a134-66682b76ffc2/d6dx289-ebe7edf2-f46d-4c74-802c-a9b5b775c87f.png' }} />
@@ -25,6 +31,7 @@ class Home extends Component {
             <Image style={styles.IconStyle} source={rankImage} />
             <Text>Ranking</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Daily")}>
             <Image style={styles.IconStyle} source={dailyImage} />
             <Text>Daily</Text>
@@ -55,7 +62,7 @@ class Home extends Component {
                 <FlatList
                   contentContainerStyle={{ marginLeft: -4 }}
                   numColumns={4}
-                  data={this.props.stories}
+                  data={this.props.storiesDeXuat}
                   renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
                     onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
                 />
@@ -73,7 +80,8 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    stories: state.stories
+    stories: state.stories,
+    storiesDeXuat: state.storiesDeXuat
   }
 }
 
@@ -81,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getStories: () => {
       dispatch(getListStories())
+    },
+    getStoriesDeXuat: (number) => {
+      dispatch(getListStoriesDeXuat(number))
     }
   }
 }

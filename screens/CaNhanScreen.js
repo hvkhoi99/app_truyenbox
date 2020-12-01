@@ -1,34 +1,75 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
-import { TouchableOpacity, FlatList, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 class CaNhanScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: []
+        }
+    }
+    componentDidMount = async () => {
+        try {
+            const value = await AsyncStorage.getItem('userLogin');
+            if (value !== null) {
+                this.setState({ list: JSON.parse(value) })
+            } else {
+                this.setState({ list: [] })
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    logOutClick = async () => {
+        try {
+            await AsyncStorage.removeItem('isLogin');
+            await AsyncStorage.removeItem('userLogin');
+            this.props.navigation.navigate('Login');
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
     render() {
-        const {navigation} =this.props;
+        const { navigation } = this.props;
         return (
             <ScrollView>
-                <View style={styles.container}>
-                    <Text style={styles.Texttitle}>
-                        Thông Tin Cá Nhân
-                    </Text>
-                </View>
+                {/* {this.state.list.length !== 0 ? ( */}
                 <View>
-                    <Text style={styles.TextInfo}>TÊN                : </Text>
-                    <Text style={styles.TextInfo}>NGÀY SINH    :</Text>
-                    <Text style={styles.TextInfo}>GIỚI TÍNH       :</Text>
+                    <View style={styles.container}>
+                        <Text style={styles.Texttitle}>
+                            Thông Tin Cá Nhân
+                    </Text>
+                    </View>
+                    <View style={styles.viewInfor}>
+                        <Text style={styles.TextInfo}>TÊN: <Text style={styles.infoUser}>{this.state.list.name}</Text></Text>
+                    </View>
+                    <View style={styles.viewInfor}>
+                        <Text style={styles.TextInfo}>Email: <Text style={styles.infoUser}>{this.state.list.email}</Text></Text>
+                    </View>
+                    <TouchableOpacity>
+                        <View style={styles.ViewBtn}>
+                            <Text style={styles.TexttitleLogout}>
+                                Sửa Thông tin cá nhân
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.ViewBtn}>
+                        <TouchableOpacity onPress={this.logOutClick}>
+                            <Text style={styles.TexttitleLogout}>
+                                Đăng Xuất
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <TouchableOpacity>
-                    <View style={styles.ViewBtn}>
-                        <Text style={styles.Texttitle}>
-                            Sửa Thông tin cá nhân
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-                    <View style={styles.ViewBtn}>
-                        <Text style={styles.Texttitle}>
-                            Đăng Xuất
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+                {/* ) : (
+                        <ActivityIndicator />
+                    )} */}
+
             </ScrollView>
         );
     }
@@ -37,24 +78,40 @@ class CaNhanScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-
     },
     ViewBtn: {
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
     },
     Texttitle: {
         marginTop: 15,
         textTransform: "uppercase",
-        //fontWeight: '700',
+    },
+    TexttitleLogout: {
+        marginTop: 15,
+        textTransform: "uppercase",
+        backgroundColor: 'black',
+        color: 'white',
+        paddingHorizontal: 8,
+        paddingVertical: 10,
+        borderRadius: 8,
+        height: 40
     },
     TextInfo: {
-        marginTop: 30,
+        marginVertical: 10,
         marginLeft: 20,
         textTransform: "uppercase",
-        //fontWeight: '400',
+        display: 'flex',
+    },
+    infoUser: {
+        backgroundColor: '#ccc',
+        borderRadius: 8,
+        paddingHorizontal: 5,
+    },
+    viewInfor: {
+        backgroundColor: 'white',
+        marginVertical: 8
     }
 })
 export default CaNhanScreen;

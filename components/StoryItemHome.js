@@ -11,16 +11,7 @@ class StoryItemHome extends Component {
         <View style={styles.container}>
           <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
           <View>
-            {/* <Text style={styles.TextStyle}>
-              <LinesEllipsis
-                text={story.name}
-                maxLine='1'
-                ellipsis='...'
-                trimRight
-                basedOn='letters'
-              />
-              {story.name}
-            </Text> */}
+
             <Text style={styles.TextStyle}>
               {((story.name).length > maxlimit) ?
                 (((story.name).substring(0, maxlimit - 3)) + '...') :

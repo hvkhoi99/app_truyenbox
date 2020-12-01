@@ -18,6 +18,8 @@ class ThongTinTruyenScreen1 extends Component {
     }
 
     render() {
+        const lastIndex = this.props.chapters.length - 1;
+        const chapter_id = (lastIndex !== -1 ? this.props.chapters[lastIndex].id : 1)
         const { navigation } = this.props;
         const { story } = this.props.route.params;
         const listCates = this.props.categories.map((cate, index) => {
@@ -43,7 +45,7 @@ class ThongTinTruyenScreen1 extends Component {
 
                         {/* onPressChapter={() => navigation.navigate('Chapter')} */}
                         <TabBarOfThongTinTruyen chapters={this.props.chapters} navigation={navigation} story={story} />
-                        <TouchableOpacity onPress={() => navigation.navigate("Chapter")}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter_id })}>
                             <View style={styles.containerDocTruyen}>
                                 <Text style={styles.TextDocTruyenStyle}>
                                     Đọc Truyện

@@ -21,6 +21,10 @@ import dailySun from './stories_dailySun'
 import dailyFri from './stories_dailyFri'
 import dailyTues from './stories_dailyTues'
 import dailySat from './stories_dailySat'
+import rankDay from './rankDay'
+import rankWeek from './rankWeek'
+import rankMonth from './rankMonth'
+import storiesDeXuat from './storiesDeXuat'
 
 
 const AppReducers = combineReducers({
@@ -44,7 +48,11 @@ const AppReducers = combineReducers({
     dailyTues,
     dailyFri,
     dailySat,
-    dailySun
+    dailySun,
+    rankDay,
+    rankWeek,
+    rankMonth,
+    storiesDeXuat
 });
 
 const rootReducer = (state, action) => {

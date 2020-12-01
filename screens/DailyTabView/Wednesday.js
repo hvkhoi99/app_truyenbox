@@ -11,7 +11,7 @@ class Wednesday extends Component {
 
     render() {
         const { navigation } = this.props;
-        console.log(this.props.storiesDaily)
+        // console.log(this.props.storiesDaily)
         return (
             <View >
                 {/* {this.props.storiesDaily.length !== 0 ? ( */}
