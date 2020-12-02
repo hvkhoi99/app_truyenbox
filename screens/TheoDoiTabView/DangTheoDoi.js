@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { actGetStoriesFollowRequest } from '../../actions/follow';
-import StoryItemChiTiet from '../../components/StoryItemChiTiet';
+import { actDeleteStoryFollow, actGetStoriesFollowRequest } from '../../actions/follow';
+import StoryActionFollow from '../../components/StoryActionFollow';
 class DangTheoDoi extends Component {
 
     constructor(props) {
@@ -38,7 +38,7 @@ class DangTheoDoi extends Component {
                     <FlatList
                         numColumns={1}
                         data={this.props.getStoriesFollow}
-                        renderItem={({ item }) => <StoryItemChiTiet name={item.name} story={item} keyExtractor={item => `${item.id}`}
+                        renderItem={({ item }) => <StoryActionFollow name={item.name} story={item} keyExtractor={item => `${item.id}`}
                             onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
                     />
                 </View>
@@ -54,19 +54,28 @@ class DangTheoDoi extends Component {
                             marginTop: 50
                         }}>Để thực hiện chức năng này, bạn cần phải Đăng Nhập!</Text>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-                            <Text style={{
-                                color: 'rgb(47, 119, 252)',
+                            <View style={{
                                 backgroundColor: 'white',
                                 // paddingHorizontal: 8,
-                                height: 30,
+                                height: 50,
                                 width: 100,
-                                paddingVertical: 5,
                                 borderRadius: 5,
                                 marginTop: 20,
-                                display: 'flex',
-                                justifyContent: 'center'
-
-                            }}>Đăng nhập</Text>
+                                // display: 'flex',
+                                // justifyContent: 'center',
+                                borderWidth: 1,
+                                borderColor: '#ccc',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    color: 'rgb(47, 119, 252)',
+                                    marginVertical: 13,
+                                    fontWeight: '700',
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: 'rgb(47, 119, 252)'
+                                }}
+                                >Đăng nhập</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 )

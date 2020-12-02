@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import LinesEllipsis from 'react-lines-ellipsis';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 class StoryItemHome extends Component {
   render() {
     const { story, onPressXayDung } = this.props;
@@ -47,7 +46,9 @@ const styles = StyleSheet.create({
     height: 100,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    borderBottomWidth: .1,
+    // borderBottomWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1
     // borderBottomColor: 'rgb(194, 192, 192)'
   }
 });

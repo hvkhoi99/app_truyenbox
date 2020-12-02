@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import Axios from 'axios';
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListStories } from '../actions/story';
 import { getListStoriesDeXuat } from '../actions/storyDeXuat';
@@ -8,8 +10,51 @@ import rankImage from '../assets/rank.png';
 import { logCurrentStorage } from '../components/logCurrentStorage';
 import SearchBar from '../components/SearchBar';
 import StoryItemHome from '../components/StoryItemHome';
+import * as Config from '../utils/Config';
 
 class Home extends Component {
+
+  findIndex = (list, id) => {
+    var result = -1;
+    list.forEach((item, index) => {
+      if (item.id === id) {
+        result = index;
+      }
+    });
+    return result;
+  }
+
+  SaveClick = async (story) => {
+    var listStory;
+    try {
+      const value = await AsyncStorage.getItem('listStory');
+      if (value !== null) {
+        listStory = JSON.parse(value);
+      } else {
+        listStory = []
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+
+    if (this.findIndex(listStory, story.id) === -1) {
+      listStory.unshift(story);
+      await AsyncStorage.setItem('listStory', JSON.stringify(listStory));
+    }
+
+    if (this.findIndex(listStory, story.id) === -1) {
+      listStory.push(story);
+      await AsyncStorage.setItem('listStory', JSON.stringify(listStory));
+    }
+
+    await Axios.put(`${Config.API_URL}/api/story/` + story.id, { view: story.view + 1 }).then(res => {
+    }).catch(err => {
+      console.log(err)
+    })
+
+    this.props.navigation.navigate('Thông Tin Truyện', { story: story });
+  }
 
 
   componentDidMount() {
@@ -19,7 +64,6 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.props.storiesDeXuat)
     const { navigation } = this.props;
     return (
 
@@ -31,7 +75,7 @@ class Home extends Component {
             <Image style={styles.IconStyle} source={rankImage} />
             <Text>Ranking</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Daily")}>
             <Image style={styles.IconStyle} source={dailyImage} />
             <Text>Daily</Text>
@@ -50,7 +94,7 @@ class Home extends Component {
                 horizontal={true}
                 data={this.props.stories}
                 renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
-                  onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+                  onPressXayDung={() => this.SaveClick(item)} />}
               />
             </View>
             <View>
@@ -64,9 +108,8 @@ class Home extends Component {
                   numColumns={4}
                   data={this.props.storiesDeXuat}
                   renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
-                    onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+                    onPressXayDung={() => this.SaveClick(item)} />}
                 />
-
               </View>
             </View>
           </View>
@@ -120,13 +163,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   StyleRankDaily: {
+    marginVertical: 10,
     alignItems: 'center',
-    marginLeft: 65,
+    marginLeft: 60,
     marginRight: 20,
     // border: '.1px solid rgb(194, 192, 192)',
     borderRadius: 5,
     width: 80,
-    height: 80
+    height: 80,
+    borderColor: 'black',
+    borderWidth: 1,
+    elevation: 1
   }
 });
 

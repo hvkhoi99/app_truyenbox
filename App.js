@@ -11,9 +11,11 @@ import store from './reducers/store';
 import CaNhanScreen from './screens/CaNhanScreen';
 import ChapterScreen from './screens/ChapterScreen';
 import DailyyyScreen from './screens/DailyyyScreen';
+import EditUserScreen from './screens/EditUserScreen';
 import Home from './screens/Home';
 import LoginScreen from './screens/LoginScreen';
 import RankingScreen from './screens/RankingScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import TheLoaiScreen from './screens/TheLoaiScreen';
 import TheoDoiScreen from './screens/TheoDoiScreen';
 import ThongTinTruyenScreen from './screens/ThongTinTruyenScreen';
@@ -27,7 +29,7 @@ function HomeTab({ navigation, route }) {
   else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
-  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện 1") {
+  else if (route.state && route.state.routes[route.state.index].name === ".Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
   else {
@@ -39,7 +41,7 @@ function HomeTab({ navigation, route }) {
       <Stack.Screen name="Ranking" component={RankingScreen} />
       <Stack.Screen name="Daily" component={DailyyyScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
-      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
+      <Stack.Screen name=".Thông Tin Truyện" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );
@@ -52,7 +54,7 @@ function TheoDoiTab({ navigation, route }) {
   else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
-  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện 1") {
+  else if (route.state && route.state.routes[route.state.index].name === ".Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
   else {
@@ -62,7 +64,7 @@ function TheoDoiTab({ navigation, route }) {
     <Stack.Navigator>
       <Stack.Screen name="Theo Dõi" component={TheoDoiScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
-      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
+      <Stack.Screen name=".Thông Tin Truyện" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );
@@ -74,7 +76,7 @@ function TheLoaiTab({ navigation, route }) {
   else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
-  else if (route.state && route.state.routes[route.state.index].name === "Thông Tin Truyện 1") {
+  else if (route.state && route.state.routes[route.state.index].name === ".Thông Tin Truyện") {
     navigation.setOptions({ tabBarVisible: false })
   }
   else {
@@ -84,7 +86,7 @@ function TheLoaiTab({ navigation, route }) {
     <Stack.Navigator>
       <Stack.Screen name="Thể Loại" component={TheLoaiScreen} />
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
-      <Stack.Screen name="Thông Tin Truyện 1" component={ThongTinTruyenScreen1} />
+      <Stack.Screen name=".Thông Tin Truyện" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
     </Stack.Navigator>
   );
@@ -129,10 +131,12 @@ export default class App extends Component {
         <Stack.Navigator>
           <Stack.Screen name="Cá Nhân" component={CaNhanScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="EditUser" component={EditUserScreen} />
         </Stack.Navigator>
       ) : (
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={RegisterScreen} />
           </Stack.Navigator>
         )
     )

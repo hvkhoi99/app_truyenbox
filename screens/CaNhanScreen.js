@@ -27,10 +27,10 @@ class CaNhanScreen extends Component {
         try {
             await AsyncStorage.removeItem('isLogin');
             await AsyncStorage.removeItem('userLogin');
-            window.location.reload();
             this.props.navigation.navigate('Login');
+            window.location.reload();
         }
-        catch(error) {
+        catch (error) {
             console.log(error)
         }
     }
@@ -44,15 +44,29 @@ class CaNhanScreen extends Component {
                     <View style={styles.container}>
                         <Text style={styles.Texttitle}>
                             Thông Tin Cá Nhân
-                    </Text>
+                        </Text>
                     </View>
                     <View style={styles.viewInfor}>
-                        <Text style={styles.TextInfo}>TÊN: <Text style={styles.infoUser}>{this.state.userData.name}</Text></Text>
+                        <View>
+                            <Text style={styles.TextInfo}>tên: </Text>
+                        </View>
+                        <View style={styles.viewTextInfo}>
+                            <Text style={styles.infoUser}>{this.state.userData.name}</Text>
+                        </View>
                     </View>
                     <View style={styles.viewInfor}>
-                        <Text style={styles.TextInfo}>Email: <Text style={styles.infoUser}>{this.state.userData.email}</Text></Text>
+                        <View>
+                            <Text style={styles.TextInfo}>email: </Text>
+                        </View>
+                        <View style={styles.viewTextInfo}>
+                            <Text style={styles.infoUser}>{this.state.userData.email}</Text>
+                        </View>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("EditUser", {
+                            nameUser: this.state.userData.name,
+                            emailUser: this.state.userData.email
+                        })}>
                         <View style={styles.ViewBtn}>
                             <Text style={styles.TexttitleLogout}>
                                 Sửa Thông tin cá nhân
@@ -79,15 +93,20 @@ class CaNhanScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        backgroundColor: 'black',
+        paddingBottom: 15
     },
     ViewBtn: {
         marginTop: 20,
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        // elevation: 1
     },
     Texttitle: {
         marginTop: 15,
         textTransform: "uppercase",
+        color: 'white'
     },
     TexttitleLogout: {
         marginTop: 15,
@@ -97,22 +116,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 10,
         borderRadius: 8,
-        height: 40
+        height: 40,
     },
     TextInfo: {
-        marginVertical: 10,
         marginLeft: 20,
         textTransform: "uppercase",
-        display: 'flex',
+        paddingVertical: 15,
+        borderRadius: 8,
     },
     infoUser: {
         backgroundColor: '#ccc',
         borderRadius: 8,
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
+        marginVertical: 15,
     },
     viewInfor: {
         backgroundColor: 'white',
-        marginVertical: 8
+        // marginVertical: 8,
+        height: 50,
+        flexDirection: 'row',
+        marginTop: 20,
+    },
+    viewTextInfo: {
+        alignItems: 'center'
     }
 })
 export default CaNhanScreen;

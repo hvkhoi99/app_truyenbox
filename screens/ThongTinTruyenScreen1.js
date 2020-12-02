@@ -45,13 +45,28 @@ class ThongTinTruyenScreen1 extends Component {
 
                         {/* onPressChapter={() => navigation.navigate('Chapter')} */}
                         <TabBarOfThongTinTruyen chapters={this.props.chapters} navigation={navigation} story={story} />
-                        <TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter_id })}>
-                            <View style={styles.containerDocTruyen}>
-                                <Text style={styles.TextDocTruyenStyle}>
-                                    Đọc Truyện
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                        }}>
+                            <TouchableOpacity>
+                                <View style={styles.containerYeuThich}>
+                                    <Text style={styles.TextYeuThichStyle}>
+                                        Theo Dõi
                             </Text>
-                            </View>
-                        </TouchableOpacity>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter_id })}>
+                                <View style={styles.containerDocTruyen}>
+                                    <Text style={styles.TextDocTruyenStyle}>
+                                        Đọc Truyện
+                            </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 ) : (
                         <ActivityIndicator />
