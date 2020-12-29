@@ -30,7 +30,6 @@ class DangTheoDoi extends Component {
     }
 
     render() {
-        // console.log(this.props.getStoriesFollow)
         const { navigation } = this.props;
         return (
             this.state.userData.length !== 0 ? (
@@ -38,14 +37,14 @@ class DangTheoDoi extends Component {
                     <FlatList
                         numColumns={1}
                         data={this.props.getStoriesFollow}
-                        renderItem={({ item }) => <StoryActionFollow name={item.name} story={item} keyExtractor={item => `${item.id}`}
+                        renderItem={({ item, index }) => <StoryActionFollow name={item.name} story={item} index={index}
                             onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+                        keyExtractor={item => `${item.id}`}
                     />
                 </View>
             ) : (
                     <View style={{
                         display: 'flex',
-                        // justifyContent: 'center',
                         alignItems: 'center'
                     }}>
                         <Text style={{
@@ -56,13 +55,10 @@ class DangTheoDoi extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
                             <View style={{
                                 backgroundColor: 'white',
-                                // paddingHorizontal: 8,
                                 height: 50,
                                 width: 100,
                                 borderRadius: 5,
                                 marginTop: 20,
-                                // display: 'flex',
-                                // justifyContent: 'center',
                                 borderWidth: 1,
                                 borderColor: '#ccc',
                                 alignItems: 'center',

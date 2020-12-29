@@ -18,8 +18,9 @@ class Cate_Manga extends Component {
                     <FlatList
                         numColumns={1}
                         data={this.props.storiesByCateId}
-                        renderItem={({ item }) => <StoryItemChiTiet name={item.name} onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} story={item} keyExtractor={item => `${item.id}`}
+                        renderItem={({ item }) => <StoryItemChiTiet name={item.name} onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} story={item}
                         />}
+                        keyExtractor={item => `${item.id}`}
                     />
                 {/* ) : (
                         <ActivityIndicator />

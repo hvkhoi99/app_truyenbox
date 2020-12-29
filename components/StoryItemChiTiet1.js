@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 class StoryItemChiTiet1 extends Component {
 
     render() {
-        // console.log(this.props.cateId);
         const { name, story, onPressXayDung } = this.props;
         return (
             <TouchableOpacity onPress={onPressXayDung}>
@@ -12,7 +11,7 @@ class StoryItemChiTiet1 extends Component {
                     <View>
                         <Text style={styles.TextStyle}>Tên: <Text style={styles.textInfor}>{name}</Text></Text>
                         {/* <Text style={styles.TextStyle}>Thể loại : {story.type}</Text> */}
-                        <Text style={styles.TextStyle}>Lượt xem: <Text style={styles.textInfor}>{story.view}</Text></Text>
+                        <Text style={styles.TextStyle}>Lượt xem: <Text style={styles.textInfor}>{story.story_view}</Text></Text>
                         <Text style={styles.TextStyle}>Theo dõi: <Text style={styles.textInfor}>{story.follow}</Text></Text>
                     </View>
                 </View>

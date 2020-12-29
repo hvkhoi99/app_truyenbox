@@ -1,20 +1,86 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListAuthor } from '../actions/author';
 import { getListCategoriesByStoryId } from '../actions/category';
+import { actDeleteStoryFollow, actFollowRequest } from '../actions/follow';
 import { getChaptersByStoryId } from '../actions/story';
 import TabBarOfThongTinTruyen from './../components/TabBarOfThongTinTruyen';
+import * as Config from '../utils/Config';
+import Axios from 'axios';
 
 
 
 class ThongTinTruyenScreen1 extends Component {
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isFollow: false,
+            userData: []
+        }
+    }
+
+
+    componentDidMount = async () => {
         const story_id = this.props.route.params.story.story_id;
         this.props.getAuthor(story_id);
         this.props.getCategories(story_id);
-        this.props.getChapters(story_id)
+        this.props.getChapters(story_id);
+
+        try {
+            const value = await AsyncStorage.getItem('userLogin');
+            if (value !== null) {
+                this.setState({ userData: JSON.parse(value) })
+            } else {
+                this.setState({ userData: [] })
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+        if (this.state.userData.length !== 0) {
+            Axios.get(`${Config.API_URL}/api/check-follow/user/${this.state.userData.id}/story/${story_id}`).then(res => {
+                if (res.data > 0) this.setState({ isFollow: true })
+            })
+        }
+
+    }
+
+    followClick = async () => {
+        var userData = this.state.userData;
+        var { story } = this.props.route.params;
+        var follows = story.follow;
+        if (userData.length === 0) {
+            Alert.alert('Bạn cần phải đăng nhập!');
+            console.log("Bạn cần phải đăng nhập!");
+        } else {
+            var storyFollow = {
+                story_id: story.story_id,
+                user_id: userData.id
+            }
+            if (this.state.isFollow) {
+                follows -= 1;
+                await Axios.put(`${Config.API_URL}/api/story/` + storyFollow.story_id, { follow: follows }).then(res => {
+                }).catch(err => {
+                    console.log(err.res)
+                })
+                this.props.unfollowStory(storyFollow.user_id, storyFollow.story_id);
+                this.setState({ isFollow: false })
+            }
+            else {
+                follows += 1;
+                await Axios.put(`${Config.API_URL}/api/story/` + storyFollow.story_id, { follow: follows }).then(res => {
+                }).catch(err => {
+                    console.log(err.res)
+                })
+                this.props.followStory(storyFollow);
+                this.props.addStory(story);
+                this.setState({ isFollow: true })
+            }
+        }
     }
 
     render() {
@@ -51,18 +117,18 @@ class ThongTinTruyenScreen1 extends Component {
                             paddingTop: 5,
                             paddingBottom: 5,
                         }}>
-                            <TouchableOpacity>
-                                <View style={styles.containerYeuThich}>
-                                    <Text style={styles.TextYeuThichStyle}>
+                            <TouchableOpacity onPress={this.followClick}>
+                                <View style={this.state.isFollow ? styles.containerYeuThich : styles.containerChuaYeuThich}>
+                                    <Text style={this.state.isFollow ? styles.TextYeuThichStyle : styles.TextChuaYeuThichStyle}>
                                         Theo Dõi
-                            </Text>
+                                    </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter_id })}>
                                 <View style={styles.containerDocTruyen}>
                                     <Text style={styles.TextDocTruyenStyle}>
                                         Đọc Truyện
-                            </Text>
+                                    </Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -95,6 +161,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         getChapters: (story_id) => {
             dispatch(getChaptersByStoryId(story_id))
+        },
+        followStory: (story) => {
+            dispatch(actFollowRequest(story));
+        },
+        unfollowStory: (user_id, story_id) => {
+            dispatch(actDeleteStoryFollow(user_id, story_id))
+        },
+        addStory: (story) => {
+            dispatch({ type: 'FOLLOW', story })
         }
     }
 }
@@ -120,7 +195,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         textTransform: "uppercase",
         // fontWeight: '700',
-        color: 'white'
+        color: 'white',
+        marginLeft: 50,
+        marginRight: 50,
     },
     ImageStyle: {
         width: 130,
@@ -145,6 +222,34 @@ const styles = StyleSheet.create({
     },
     rightContain: {
         width: 200
-    }
+    },
+    TextYeuThichStyle: {
+        marginTop: 5,
+        textTransform: "uppercase",
+        //fontWeight: '700',
+        color: 'white',
+        alignItems: 'center',
+        marginLeft: 55,
+        marginRight: 60,
+    },
+    TextChuaYeuThichStyle: {
+        marginTop: 5,
+        textTransform: "uppercase",
+        //fontWeight: '700',
+        color: 'black',
+        alignItems: 'center',
+        marginLeft: 55,
+        marginRight: 60,
+    },
+    containerYeuThich: {
+        alignItems: 'center',
+        backgroundColor: 'rgb(151, 15, 15)',
+        height: 30,
+    },
+    containerChuaYeuThich: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        height: 30,
+    },
 })
 

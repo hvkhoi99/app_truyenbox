@@ -19,8 +19,9 @@ class Thursday extends Component {
                 <FlatList
                     numColumns={1}
                     data={this.props.storiesDaily}
-                    renderItem={({ item }) => <StoryItemChiTiet1 name={item.name_story} story={item} keyExtractor={item => `${item.id}`}
+                    renderItem={({ item }) => <StoryItemChiTiet1 name={item.name_story} story={item}
                         onPressXayDung={() => navigation.navigate('.Thông Tin Truyện', { story: item })} />}
+                        keyExtractor={item => `${item.id}`}
                 />
                 {/* ) : (
                         <ActivityIndicator />

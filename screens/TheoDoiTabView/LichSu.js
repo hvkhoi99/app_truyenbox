@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import StoryActionHistory from '../../components/StoryActionHistory';
 class LichSu extends Component {
 
-
     componentDidMount = async () => {
         var listStory;
         try {
@@ -20,20 +19,18 @@ class LichSu extends Component {
             console.log(error)
         }
         this.props.getHistory(listStory);
-
     }
-
 
     render() {
         const { navigation } = this.props;
-        // const { StoryArray } = this.state;
         return (
             <View >
                 <FlatList
                     numColumns={1}
                     data={this.props.history}
-                    renderItem={({ item }) => <StoryActionHistory name={item.name} story={item} keyExtractor={item => `${item.id}`}
-                        onPressXayDung={() => navigation.navigate('Thông Tin Truyện')} />}
+                    renderItem={({ item, index }) => <StoryActionHistory name={item.name} story={item} index={index}
+                        onPressXayDung={() => navigation.navigate('Thông Tin Truyện', { story: item })} />}
+                    keyExtractor={item => `${item.id}`}
                 />
             </View>
         );

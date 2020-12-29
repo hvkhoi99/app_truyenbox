@@ -14,12 +14,14 @@ const history = (state = InitialState, action) => {
     switch (action.type) {
         case 'GET_HISTORY':
             state = action.stories;
-            return [...state]
+            return [...state];
+        case 'ADD_HISTORY':
+            state.push(action.story);
+            return [...state];
         case 'DELETE_HISTORY':
             index = findIndex(state, action.id);
             state.splice(index, 1);
             return [...state];
-        
         default:
             return state
     }

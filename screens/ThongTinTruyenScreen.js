@@ -1,15 +1,14 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListAuthor } from '../actions/author';
 import { getListCategoriesByStoryId } from '../actions/category';
 import { getChaptersByStoryId } from '../actions/story';
 import * as Config from '../utils/Config';
 import TabBarOfThongTinTruyen from './../components/TabBarOfThongTinTruyen';
-import {actFollowRequest ,actDeleteStoryFollow } from '../actions/follow';
-
+import { actFollowRequest, actDeleteStoryFollow } from '../actions/follow';
 
 class ThongTinTruyenScreen extends Component {
 
@@ -20,7 +19,6 @@ class ThongTinTruyenScreen extends Component {
             userData: []
         }
     }
-    
 
     componentDidMount = async () => {
         const story_id = this.props.route.params.story.id;
@@ -40,23 +38,22 @@ class ThongTinTruyenScreen extends Component {
             console.log(error)
         }
 
-        if(this.state.userData.length!==0)
-        {
+        if (this.state.userData.length !== 0) {
             Axios.get(`${Config.API_URL}/api/check-follow/user/${this.state.userData.id}/story/${story_id}`).then(res => {
                 if (res.data > 0) this.setState({ isFollow: true })
             })
         }
-        
+
     }
 
     followClick = async () => {
         var userData = this.state.userData;
         var { story } = this.props.route.params;
         var follows = story.follow;
-        if(userData.length===0){
-            // Alert.alert('Bạn cần phải đăng nhập!')
-            console.log("Bạn cần phải đăng nhập!")
-        }else{
+        if (userData.length === 0) {
+            Alert.alert('Bạn cần phải đăng nhập!');
+            console.log("Bạn cần phải đăng nhập!");
+        } else {
             var storyFollow = {
                 story_id: story.id,
                 user_id: userData.id
@@ -77,20 +74,17 @@ class ThongTinTruyenScreen extends Component {
                     console.log(err.res)
                 })
                 this.props.followStory(storyFollow);
+                this.props.addStory(story);
                 this.setState({ isFollow: true })
             }
         }
     }
 
     render() {
-        // const {story} = this.props.route.params;
-        // console.log(this.state.isFollow)
         const lastIndex = this.props.chapters.length - 1;
         const chapter_id = (lastIndex !== -1 ? this.props.chapters[lastIndex].id : 1)
-        // console.log(chapter_id);
         const { navigation } = this.props;
         const { story } = this.props.route.params;
-        // console.log(story)
         const listCates = this.props.categories.map((cate, index) => {
             return <Text style={styles.TextCate} key={index}>{cate.name} </Text>
         })
@@ -104,15 +98,14 @@ class ThongTinTruyenScreen extends Component {
                         <View style={styles.InfoStyle}>
                             <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
                             <View>
-                                <Text style={styles.InfoTextStyle}>Tác giả : <Text style={styles.TextCate}>{this.props.authors.name}</Text></Text>
+                                <Text style={styles.InfoTextStyle}>Tác giả : <Text style={styles.TextCate}>{this.props.authors.name ? this.props.authors.name : 'Khôi vjp123'}</Text></Text>
                                 <Text style={styles.InfoTextStyle}>Trạng thái : <Text style={styles.TextCate}>{story.status}</Text></Text>
-                                <Text style={styles.InfoTextStyle}>Thể loại : {listCates}</Text>
+                                <Text style={styles.InfoTextStyle}>Thể loại : <Text style={styles.TextCate}>{listCates.length !== 0 ? listCates : 'hài sơ sơ'}</Text></Text>
                                 <Text style={styles.InfoTextStyle}>Lượt xem : <Text style={styles.TextCate}>{story.view}</Text></Text>
                                 <Text style={styles.InfoTextStyle}>Yêu thích : <Text style={styles.TextCate}>{story.follow}</Text></Text>
                             </View>
                         </View>
 
-                        {/* onPressChapter={() => navigation.navigate('Chapter')} */}
                         <TabBarOfThongTinTruyen chapters={this.props.chapters} navigation={navigation} story={story} />
                         <View style={{
                             flexDirection: 'row',
@@ -121,8 +114,8 @@ class ThongTinTruyenScreen extends Component {
                             paddingBottom: 5,
                         }}>
                             <TouchableOpacity onPress={this.followClick}>
-                                <View style={this.state.isFollow?styles.containerYeuThich:styles.containerChuaYeuThich}>
-                                    <Text style={this.state.isFollow?styles.TextYeuThichStyle:styles.TextChuaYeuThichStyle}>
+                                <View style={this.state.isFollow ? styles.containerYeuThich : styles.containerChuaYeuThich}>
+                                    <Text style={this.state.isFollow ? styles.TextYeuThichStyle : styles.TextChuaYeuThichStyle}>
                                         Theo Dõi
                                     </Text>
                                 </View>
@@ -131,7 +124,7 @@ class ThongTinTruyenScreen extends Component {
                                 <View style={styles.containerDocTruyen}>
                                     <Text style={styles.TextDocTruyenStyle}>
                                         Đọc Truyện
-                            </Text>
+                                    </Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -150,7 +143,6 @@ const mapStateToProps = (state) => {
         authors: state.authors,
         categories: state.categories,
         chapters: state.chapters,
-
     }
 }
 
@@ -171,6 +163,9 @@ const mapDispatchToProps = (dispatch) => {
         unfollowStory: (user_id, story_id) => {
             dispatch(actDeleteStoryFollow(user_id, story_id))
         },
+        addStory: (story) => {
+            dispatch({ type: 'FOLLOW', story })
+        }
     }
 }
 
@@ -199,12 +194,10 @@ const styles = StyleSheet.create({
     Texttitle: {
         marginTop: 5,
         textTransform: "uppercase",
-        // fontWeight: '700',
     },
     TextDocTruyenStyle: {
         marginTop: 5,
         textTransform: "uppercase",
-        // fontWeight: '700',
         color: 'white',
         marginLeft: 50,
         marginRight: 50,
@@ -212,7 +205,6 @@ const styles = StyleSheet.create({
     TextYeuThichStyle: {
         marginTop: 5,
         textTransform: "uppercase",
-        //fontWeight: '700',
         color: 'white',
         alignItems: 'center',
         marginLeft: 55,
@@ -221,7 +213,6 @@ const styles = StyleSheet.create({
     TextChuaYeuThichStyle: {
         marginTop: 5,
         textTransform: "uppercase",
-        //fontWeight: '700',
         color: 'black',
         alignItems: 'center',
         marginLeft: 55,
@@ -231,7 +222,6 @@ const styles = StyleSheet.create({
         width: 130,
         height: 170,
         marginTop: 7,
-
     },
     InfoStyle: {
         flexDirection: 'row',

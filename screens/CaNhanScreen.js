@@ -1,26 +1,33 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+import { actGetUserRequest } from '../actions/userCurrent';
 class CaNhanScreen extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            userData: []
-        }
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         userData: []
+    //     }
+    // }
     componentDidMount = async () => {
+        //window.location.reload;
+        var userData;
         try {
             const value = await AsyncStorage.getItem('userLogin');
             if (value !== null) {
-                this.setState({ userData: JSON.parse(value) })
+                // this.setState({ userData: JSON.parse(value) })
+                userData = JSON.parse(value);
             } else {
-                this.setState({ userData: [] })
+                userData = [];
             }
         }
         catch (error) {
             console.log(error)
         }
+        const user_id = userData.id;
+        this.props.getUser(user_id);
     }
 
     logOutClick = async () => {
@@ -51,7 +58,7 @@ class CaNhanScreen extends Component {
                             <Text style={styles.TextInfo}>tên: </Text>
                         </View>
                         <View style={styles.viewTextInfo}>
-                            <Text style={styles.infoUser}>{this.state.userData.name}</Text>
+                            <Text style={styles.infoUser}>{this.props.userCurrentttt.name}</Text>
                         </View>
                     </View>
                     <View style={styles.viewInfor}>
@@ -59,13 +66,13 @@ class CaNhanScreen extends Component {
                             <Text style={styles.TextInfo}>email: </Text>
                         </View>
                         <View style={styles.viewTextInfo}>
-                            <Text style={styles.infoUser}>{this.state.userData.email}</Text>
+                            <Text style={styles.infoUser}>{this.props.userCurrentttt.email}</Text>
                         </View>
                     </View>
                     <TouchableOpacity
                         onPress={() => navigation.navigate("EditUser", {
-                            nameUser: this.state.userData.name,
-                            emailUser: this.state.userData.email
+                            nameUser: this.props.userCurrentttt.name,
+                            emailUser: this.props.userCurrentttt.email
                         })}>
                         <View style={styles.ViewBtn}>
                             <Text style={styles.TexttitleLogout}>
@@ -132,7 +139,6 @@ const styles = StyleSheet.create({
     },
     viewInfor: {
         backgroundColor: 'white',
-        // marginVertical: 8,
         height: 50,
         flexDirection: 'row',
         marginTop: 20,
@@ -141,4 +147,18 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 })
-export default CaNhanScreen;
+const mapStateToProps = (state) => {
+    return {
+        userCurrentttt: state.userCurrentttt
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getUser: (id) => {
+            dispatch(actGetUserRequest(id))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CaNhanScreen);

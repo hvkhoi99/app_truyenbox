@@ -14,7 +14,9 @@ const getStoriesFollow = (state = getCategoryInitialState, action) => {
         case 'GET_STORIES_FOLLOW':
             state = action.storiesFollow
             return [...state]
-
+        case 'FOLLOW':
+            state.push(action.story)
+            return [...state]
         case 'UN_FOLLOW':
             index = findIndex(state, action.story_id);
             state.splice(index, 1);

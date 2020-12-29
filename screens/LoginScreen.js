@@ -19,23 +19,23 @@ class LoginScreen extends Component {
             errMsg: "",
             userInput: '',
             passInput: '',
-            userData: []
+            // userData: []
         };
     }
 
-    componentDidMount = async () => {
-        try {
-            const value = await AsyncStorage.getItem('userLogin');
-            if (value !== null) {
-                this.setState({ userData: JSON.parse(value) })
-            } else {
-                this.setState({ userData: [] })
-            }
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
+    // componentDidMount = async () => {
+    //     try {
+    //         const value = await AsyncStorage.getItem('userLogin');
+    //         if (value !== null) {
+    //             this.setState({ userData: JSON.parse(value) })
+    //         } else {
+    //             this.setState({ userData: [] })
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
 
     handleChangeUserInput = (text) => {
@@ -46,8 +46,6 @@ class LoginScreen extends Component {
         this.setState({ passInput: text });
     }
 
-    
-
     loginClick = () => {
         Axios.post(`${Config.API_URL}/api/login-user`, {
             email: this.state.userInput,
@@ -55,12 +53,12 @@ class LoginScreen extends Component {
         }).then(async response => {
             if (response.data.status === 200) {
                 try {
-                    await AsyncStorage.setItem('isLogin', 'true');
                     await AsyncStorage.setItem('userLogin', JSON.stringify(response.data.data));
+                    this.props.addUserToAsync(response.data.data);
                     // RNRestart.Restart();
-                    { (this.state.userData.length !== 0) ? this.props.navigation.navigate('Trang Chủ') : <ActivityIndicator /> }
-                    // this.props.navigation.navigate('Trang Chủ')
-                    window.location.reload();
+                    // { (this.state.userData.length !== 0) ? this.props.navigation.navigate('Trang Chủ') : <ActivityIndicator /> }
+                    window.location.reload;
+                    this.props.navigation.navigate('Cá Nhân');
                 } catch (error) {
                     console.log(error)
                 }
@@ -113,7 +111,8 @@ class LoginScreen extends Component {
                     }}>{this.state.errMsgEmail}</Text>
                 </View>
                 <View style={styles.ViewInputStyle}>
-                    <TextInput style={styles.InputStyle} placeholder='Nhập email...' onChangeText={this.handleChangeUserInput} value={this.state.userInput} />
+                    <TextInput style={styles.InputStyle} placeholder='Nhập email...'
+                        onChangeText={this.handleChangeUserInput} value={this.state.userInput} />
                 </View>
                 <View style={{
                     paddingBottom: 5,
@@ -302,6 +301,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setLoginTrue: () => {
             dispatch(isLoginTrue())
+        },
+        addUserToAsync: (user) => {
+            dispatch({ type: 'ADD_USER_CURRENT', user })
         }
     }
 }

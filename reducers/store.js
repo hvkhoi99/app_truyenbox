@@ -5,28 +5,32 @@ import authors from './authors';
 import categories from './categories';
 import chapters from './chapters';
 import images from './imgs';
-import storiesByCateId1 from './stories_byCateId1'
-import storiesByCateId2 from './stories_byCateId2'
-import storiesByCateId3 from './stories_byCateId3'
-import storiesByCateId4 from './stories_byCateId4'
-import storiesByCateId5 from './stories_byCateId5'
-import storiesByCateId6 from './stories_byCateId6'
-import storiesByCateId7 from './stories_byCateId7'
-import storiesByCateId8 from './stories_byCateId8'
-import storiesByCateId9 from './stories_byCateId9'
-import daily from './daily'
-import dailyThur from './stories_dailyThur'
-import dailyWed from './stories_dailyWed'
-import dailySun from './stories_dailySun'
-import dailyFri from './stories_dailyFri'
-import dailyTues from './stories_dailyTues'
-import dailySat from './stories_dailySat'
-import rankDay from './rankDay'
-import rankWeek from './rankWeek'
-import rankMonth from './rankMonth'
-import storiesDeXuat from './storiesDeXuat'
-import getStoriesFollow from './follows'
-import history from './histories'
+import storiesByCateId1 from './stories_byCateId1';
+import storiesByCateId2 from './stories_byCateId2';
+import storiesByCateId3 from './stories_byCateId3';
+import storiesByCateId4 from './stories_byCateId4';
+import storiesByCateId5 from './stories_byCateId5';
+import storiesByCateId6 from './stories_byCateId6';
+import storiesByCateId7 from './stories_byCateId7';
+import storiesByCateId8 from './stories_byCateId8';
+import storiesByCateId9 from './stories_byCateId9';
+import daily from './daily';
+import dailyThur from './stories_dailyThur';
+import dailyWed from './stories_dailyWed';
+import dailySun from './stories_dailySun';
+import dailyFri from './stories_dailyFri';
+import dailyTues from './stories_dailyTues';
+import dailySat from './stories_dailySat';
+import rankDay from './rankDay';
+import rankWeek from './rankWeek';
+import rankMonth from './rankMonth';
+import storiesDeXuat from './storiesDeXuat';
+import getStoriesFollow from './follows';
+import history from './histories';
+import userCurrentttt from './userCurrentttt';
+import searchStory from './searchStory';
+import storiesHot from './storiesHot';
+import comments from './comments';
 
 const AppReducers = combineReducers({
     stories,
@@ -55,7 +59,11 @@ const AppReducers = combineReducers({
     rankMonth,
     storiesDeXuat,
     getStoriesFollow,
-    history
+    history,
+    userCurrentttt,
+    searchStory,
+    storiesHot,
+    comments
 });
 
 const rootReducer = (state, action) => {

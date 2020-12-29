@@ -69,7 +69,7 @@ class EditUserScreen extends Component {
             }
             window.location.reload();
         }
-        // this.props.navigation.navigate('Cá Nhân')
+        this.props.navigation.navigate('Cá Nhân')
     }
 
     render() {

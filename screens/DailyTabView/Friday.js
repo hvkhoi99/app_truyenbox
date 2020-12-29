@@ -10,15 +10,15 @@ class Friday extends Component {
 
     render() {
         const { navigation } = this.props;
-        // console.log(this.props.storiesDaily)
         return (
             <View >
                 {/* {this.props.storiesDaily.length !== 0 ? ( */}
                 <FlatList
                     numColumns={1}
                     data={this.props.storiesDaily}
-                    renderItem={({ item }) => <StoryItemChiTiet1 name={item.name_story} story={item} keyExtractor={item => `${item.id}`}
+                    renderItem={({ item }) => <StoryItemChiTiet1 name={item.name_story} story={item}
                         onPressXayDung={() => navigation.navigate('.Thông Tin Truyện', { story: item })} />}
+                        keyExtractor={item => `${item.id}`}
                 />
                 {/* ) : (
                         <ActivityIndicator />

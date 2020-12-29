@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import { LogBox } from 'react-native'
+import { LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './reducers/store';
 import CaNhanScreen from './screens/CaNhanScreen';
@@ -20,6 +20,10 @@ import TheLoaiScreen from './screens/TheLoaiScreen';
 import TheoDoiScreen from './screens/TheoDoiScreen';
 import ThongTinTruyenScreen from './screens/ThongTinTruyenScreen';
 import ThongTinTruyenScreen1 from './screens/ThongTinTruyenScreen1';
+import SearchPage from './screens/SearchPage';
+// import SlideshowTest from './components/slideImg';
+import SwiperImg from './components/swiperImg';
+
 
 const Stack = createStackNavigator();
 function HomeTab({ navigation, route }) {
@@ -43,6 +47,7 @@ function HomeTab({ navigation, route }) {
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
       <Stack.Screen name=".Thông Tin Truyện" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
+      <Stack.Screen name="Search Page" component={SearchPage} />
     </Stack.Navigator>
   );
 }
@@ -88,6 +93,7 @@ function TheLoaiTab({ navigation, route }) {
       <Stack.Screen name="Thông Tin Truyện" component={ThongTinTruyenScreen} />
       <Stack.Screen name=".Thông Tin Truyện" component={ThongTinTruyenScreen1} />
       <Stack.Screen name="Chapter" component={ChapterScreen} />
+      <Stack.Screen name="Search Page" component={SearchPage} />
     </Stack.Navigator>
   );
 }
@@ -104,7 +110,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       userData: [],
-      currentScreen: ""
+      currentScreen: "",
     }
   }
 
@@ -125,28 +131,26 @@ export default class App extends Component {
   }
 
   CaNhanTab = () => {
-
     return (
-      (this.state.userData.length !== 0) ? (
-        <Stack.Navigator>
-          <Stack.Screen name="Cá Nhân" component={CaNhanScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="EditUser" component={EditUserScreen} />
-        </Stack.Navigator>
-      ) : (
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Signup" component={RegisterScreen} />
-          </Stack.Navigator>
-        )
+      <Stack.Navigator>
+        <Stack.Screen name="Cá Nhân" component={CaNhanScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="EditUser" component={EditUserScreen} />
+      </Stack.Navigator>
+    )
+  }
+  LoginTab = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={RegisterScreen} />
+      </Stack.Navigator>
     )
   }
 
   render() {
-    // console.log(this.state.userData)
-    console.log(this.state.currentScreen)
-    // LogBox.ignoreLogs(['Warning: ...']);
-    // LogBox.ignoreAllLogs();
+    LogBox.ignoreLogs(['Warning: ...']);
+    LogBox.ignoreAllLogs();
     return (
       (this.state.currentScreen !== "") ? (
         <Provider store={store}>
@@ -171,11 +175,11 @@ export default class App extends Component {
                 tabBarIcon: ({ focused }) => (
                   <Icon name="ios-person" size={30} color={focused ? color.active : color.inactive} />
                 )
-              }} name={this.state.currentScreen} component={this.CaNhanTab} />
+              }} name={this.state.currentScreen} component={this.state.currentScreen == "Cá Nhân" ? this.CaNhanTab : this.LoginTab} />
             </Tab.Navigator>
           </NavigationContainer>
         </Provider>
-        ) : (<ActivityIndicator/>)
+      ) : (<ActivityIndicator />)
     )
   }
 }

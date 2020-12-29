@@ -11,6 +11,9 @@ import { logCurrentStorage } from '../components/logCurrentStorage';
 import SearchBar from '../components/SearchBar';
 import StoryItemHome from '../components/StoryItemHome';
 import * as Config from '../utils/Config';
+import SwiperImg from '../components/swiperImg';
+import SlideshowTest from '../components/slideImg';
+import { getTruyenHotRequest } from '../actions/storyHot';
 
 class Home extends Component {
 
@@ -52,12 +55,13 @@ class Home extends Component {
     }).catch(err => {
       console.log(err)
     })
-
+    this.props.addHistory(story);
     this.props.navigation.navigate('Thông Tin Truyện', { story: story });
   }
 
 
   componentDidMount() {
+    this.props.getStoriesHot(5);
     this.props.getStories();
     this.props.getStoriesDeXuat(8);
     logCurrentStorage();
@@ -66,49 +70,62 @@ class Home extends Component {
   render() {
     const { navigation } = this.props;
     return (
-
       <ScrollView>
-        <SearchBar />
-        <Image style={styles.WallpagerStyle} source={{ uri: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/dc9a94d0-a984-4f3f-a134-66682b76ffc2/d6dx289-ebe7edf2-f46d-4c74-802c-a9b5b775c87f.png' }} />
+        <SearchBar navigation={navigation} />
+        {/* <Image style={styles.WallpagerStyle} source={{ uri: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/dc9a94d0-a984-4f3f-a134-66682b76ffc2/d6dx289-ebe7edf2-f46d-4c74-802c-a9b5b775c87f.png' }} /> */}
+        <View style={styles.containerView}>
+          <SwiperImg storiesHot={this.props.storiesHot} />
+          {/* <SlideshowTest storiesHot={this.props.storiesHot} /> */}
+        </View>
         <View style={styles.TextStyle}>
-          <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Ranking")}>
-            <Image style={styles.IconStyle} source={rankImage} />
-            <Text>Ranking</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Daily")}>
-            <Image style={styles.IconStyle} source={dailyImage} />
-            <Text>Daily</Text>
-          </TouchableOpacity>
+          <View style={styles.shadowIconText}>
+            <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Ranking")}>
+              <Image style={styles.IconStyle} source={rankImage} />
+              <Text>Ranking</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.shadowIconText}>
+            <TouchableOpacity style={styles.StyleRankDaily} onPress={() => navigation.navigate("Daily")}>
+              <View style={styles.shadowIconTextItem}>
+                <Image style={styles.IconStyle} source={dailyImage} />
+                <Text>Daily</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         {this.props.stories.length !== 0 ? (
           <View>
             <View>
               <View style={styles.TextStyle}>
                 <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Mới Cập Nhật</Text>
-                <Text>Xem thêm</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Daily')}>
+                  <Text style={styles.Xemthem}>Xem thêm {">"} </Text>
+                </TouchableOpacity>
               </View>
               <FlatList
-                // numColumns={4} 
                 contentContainerStyle={{ marginLeft: -4 }}
                 horizontal={true}
                 data={this.props.stories}
-                renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
+                renderItem={({ item }) => <StoryItemHome story={item}
                   onPressXayDung={() => this.SaveClick(item)} />}
+                keyExtractor={item => `${item.id}`}
               />
             </View>
             <View>
               <View style={styles.TextStyle}>
                 <Text style={styles.TextStyleMoiCapNhatvaDeXuat}>Đề Xuất</Text>
-                <Text>Xem thêm</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Ranking')}>
+                  <Text style={styles.Xemthem}>Xem thêm {">"}</Text>
+                </TouchableOpacity>
               </View>
               <View>
                 <FlatList
                   contentContainerStyle={{ marginLeft: -4 }}
                   numColumns={4}
                   data={this.props.storiesDeXuat}
-                  renderItem={({ item }) => <StoryItemHome story={item} keyExtractor={item => `${item.id}`}
+                  renderItem={({ item }) => <StoryItemHome story={item}
                     onPressXayDung={() => this.SaveClick(item)} />}
+                  keyExtractor={item => `${item.id}`}
                 />
               </View>
             </View>
@@ -124,7 +141,10 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     stories: state.stories,
-    storiesDeXuat: state.storiesDeXuat
+    storiesDeXuat: state.storiesDeXuat,
+    // history: state.history
+    storiesHot: state.storiesHot,
+
   }
 }
 
@@ -135,7 +155,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     getStoriesDeXuat: (number) => {
       dispatch(getListStoriesDeXuat(number))
-    }
+    },
+    addHistory: (story) => {
+      dispatch({ type: 'ADD_HISTORY', story })
+    },
+    getStoriesHot: (number) => {
+      dispatch(getTruyenHotRequest(number))
+    },
   }
 }
 
@@ -144,6 +170,10 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
+  containerView: {
+    // marginTop: 50
+
+  },
   WallpagerStyle: {
     height: 150,
     width: 400,
@@ -155,26 +185,34 @@ const styles = StyleSheet.create({
   },
   TextStyle: {
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 15,
     flexDirection: 'row',
-    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-evenly',
   },
   TextStyleMoiCapNhatvaDeXuat: {
     flex: 1,
+    fontSize: 18,
+    fontWeight: '700'
   },
-  StyleRankDaily: {
-    marginVertical: 10,
+  shadowIconText: {
+    // elevation: 1,
+    // shadowColor: 'orange',
+    // shadowOpacity: 0.3,
+    // shadowRadius: 10,
+    width: 100,
+    borderRadius: 8,
     alignItems: 'center',
-    marginLeft: 60,
-    marginRight: 20,
-    // border: '.1px solid rgb(194, 192, 192)',
-    borderRadius: 5,
-    width: 80,
-    height: 80,
-    borderColor: 'black',
-    borderWidth: 1,
-    elevation: 1
+    marginVertical: 10,
+    borderColor: 'orange',
+    borderWidth: 1
+  },
+  shadowIconTextItem: {
+    alignItems: 'center'
+  },
+  Xemthem: {
+    borderBottomWidth: 1,
+    borderColor: 'rgb(47, 119, 252)',
+    color: 'rgb(47, 119, 252)'
   }
 });
-
-// export default Home;

@@ -243,7 +243,7 @@ class RegisterScreen extends Component {
                     <TouchableOpacity>
                         <View style={styles.containerGG}>
                             <Image style={{ marginLeft: 5, height: 35, width: 35 }} source={ggImage} />
-                            <Text style={{ marginLeft: 5 }}>
+                            <Text style={{ marginLeft: 5, width: 100 }}>
                                 Đăng ký bằng
                                 Google
                         </Text>

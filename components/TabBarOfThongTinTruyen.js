@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {
     Animated,
     Dimensions, ScrollView, StyleSheet, Text,
-    TouchableOpacity, View
+    TouchableOpacity, View, TextInput, Image
 } from "react-native";
+import Icon from 'react-native-vector-icons/Ionicons';
+// import rankImage from '../assets/paper-plane.png'
 const { width } = Dimensions.get("window");
 
 class TabBarOfThongTinTruyen extends Component {
@@ -75,12 +77,7 @@ class TabBarOfThongTinTruyen extends Component {
         }
     };
     render() {
-        //onPressChapter={() => navigation.navigate('Chapter')}
-        // onPress={() => navigation.navigate('Chapter', {id: 1, nameCT: 'abc'})}
-        // console.log(this.props)
         const { onPressChapter, navigation } = this.props;
-        // console.log(onPressChapter);
-        // console.log(navigation);
         let {
             xTabOne,
             xTabTwo,
@@ -230,8 +227,14 @@ class TabBarOfThongTinTruyen extends Component {
                                 ]
                             }}
                         >
-                            <Text>{this.props.story.description}</Text>
+                            <View style={styles.TitleDescriptionContainer}>
+                                <Text style={{
+                                    paddingVertical: 8
+                                }}>{this.props.story.description}</Text>
+                            </View>
+
                         </Animated.View>
+
                     </ScrollView>
                 </View>
             </View>
@@ -275,7 +278,12 @@ const styles = StyleSheet.create({
     cssChapter_3: {
         color: 'rgb(126, 124, 124)'
 
-    }
+    },
+    TitleDescriptionContainer: {
+        borderStyle: "solid",
+        borderBottomWidth: 1,
+        marginBottom: 16
+    },
 
 })
 

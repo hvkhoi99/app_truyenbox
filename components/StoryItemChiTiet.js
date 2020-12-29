@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 class StoryItemChiTiet extends Component {
 
     render() {
-        // console.log(this.props.cateId);
         const { name, story, onPressXayDung } = this.props;
         return (
             <TouchableOpacity onPress={onPressXayDung}>

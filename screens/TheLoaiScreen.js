@@ -25,8 +25,8 @@ class TheLoaiScreen extends Component {
     render() {
         const {navigation} = this.props;
         return (
-            <ScrollView>
-                <SearchBar />
+            <ScrollView navigation={navigation}>
+                <SearchBar navigation={navigation}/>
                 {/* {this.props.categories.length !== 0 ? ( */}
                 <Tab.Navigator
                     sceneContainerStyle={{
