@@ -5,6 +5,7 @@ import { getListImgs } from '../actions/image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { actAddCommentRequest, actGetCommentsRequest } from '../actions/comment';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // var moment = require('moment')
 class ChapterScreen extends Component {
@@ -48,45 +49,38 @@ class ChapterScreen extends Component {
     }
 
     commentFunc = () => {
-
-        Alert.alert(this.state.userData.id);
-        // var userId = this.state.userData.id;
-        // var userName = this.state.userData.name;
-        // if (this.state.userData) {
-        //     if (this.state.contentInput === '') {
-
-        //     }
-        //     else {
-        //         var comment = {
-        //             content: this.state.contentInput,
-        //             chapter_id: this.props.route.params.chapter_id,
-        //             user_id: 
-        //         }
-        //         var newComment = {
-        //             content: this.state.contentInput,
-        //             name: userName
-        //         }
-        //         var tmp = this.state.comments;
-        //         tmp.unshift(newComment);
-        //         this.setState({ comments: tmp })
-        //         this.props.commentFunc(comment);
-        //         this.state.contentInput = "";
-        //     }
-        // }
-        // else {
-        //     Alert.alert('Bạn cần phải đăng nhập để bình luận!');
-        // }
-    }
-
-    getListComment() {
-
-        return listComment;
+        var userID = this.state.userData.id;
+        var userName = this.state.userData.name;
+        if (this.state.userData) {
+            if (this.state.contentInput === '') {
+                Alert.alert("Cần phải nhập mới bình luận được bạn ơi!");
+            }
+            else {
+                var comment = {
+                    content: this.state.contentInput,
+                    chapter_id: this.props.route.params.chapter_id,
+                    user_id: userID
+                }
+                var newComment = {
+                    content: this.state.contentInput,
+                    name: userName
+                }
+                var tmp = this.state.comments;
+                tmp.unshift(newComment);
+                this.setState({ comments: tmp })
+                this.props.commentFunc(comment);
+                this.state.contentInput = "";
+            }
+        }
+        else {
+            Alert.alert('Bạn cần phải đăng nhập để bình luận!');
+        }
     }
 
     render() {
         const listComment = this.state.comments.map((comment, index) => {
             return (
-                <View style={styles.UserComment}>
+                <View style={styles.UserComment} key={index}>
                     <View style={styles.viewContentUser}>
                         <Icon name="ios-person" size={40} color='#ccc' />
                     </View>
@@ -143,7 +137,7 @@ class ChapterScreen extends Component {
                         onChangeText={this.handleChangeContentInput}
                         value={this.state.contentInput}
                     />
-                    <TouchableOpacity onPress={() => { this.commentFunc() }}>
+                    <TouchableOpacity onPress={this.commentFunc}>
                         <Icon style={styles.commentIcon} name="ios-paper-plane" size={40} color="rgb(12, 138, 235)" />
                     </TouchableOpacity>
                 </View>
@@ -206,12 +200,13 @@ const styles = StyleSheet.create({
     UsersCommentArea: {
         backgroundColor: '#fff',
         marginVertical: 10,
-        marginHorizontal: 5
+        marginHorizontal: 5,
     },
     UserComment: {
         paddingVertical: 10,
         flex: 1,
         flexDirection: 'row',
+        marginBottom: 30
     },
     viewComment: {
         backgroundColor: 'rgb(245, 245, 245)',

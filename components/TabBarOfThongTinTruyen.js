@@ -7,6 +7,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 // import rankImage from '../assets/paper-plane.png'
 const { width } = Dimensions.get("window");
+import moment from 'moment';
 
 class TabBarOfThongTinTruyen extends Component {
     constructor(props) {
@@ -92,7 +93,7 @@ class TabBarOfThongTinTruyen extends Component {
             return (<TouchableOpacity onPress={() => navigation.navigate("Chapter", { chapter_id: chapter.id })} key={index}>
                 <View style={styles.columnCDV}>
                     <Text style={styles.cssChapter_1}>{chapter.name}</Text>
-                    <Text style={styles.cssChapter_2}>10/03/1999</Text>
+                    <Text style={styles.cssChapter_2}>{moment(chapter.created_at).fromNow()}</Text>
                     <Text style={styles.cssChapter_3}>{chapter.view}</Text>
                 </View>
             </TouchableOpacity>);

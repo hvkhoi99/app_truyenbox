@@ -43,7 +43,6 @@ class ThongTinTruyenScreen extends Component {
                 if (res.data > 0) this.setState({ isFollow: true })
             })
         }
-
     }
 
     followClick = async () => {

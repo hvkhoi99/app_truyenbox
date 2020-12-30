@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 5,
         marginLeft: 5,
+
     },
     ImageStyle: {
         width: 90,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     },
     textInfor: {
         backgroundColor: 'rgb(208, 208, 214)',
-        borderRadius: 5,
+        borderRadius: 8,
         marginLeft: 1,
     },
     StoryItemInfor: {
