@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getListStories } from '../actions/story';
 import { getListStoriesDeXuat } from '../actions/storyDeXuat';
@@ -72,7 +72,6 @@ class Home extends Component {
     return (
       <ScrollView>
         <SearchBar navigation={navigation} />
-        {/* <Image style={styles.WallpagerStyle} source={{ uri: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/dc9a94d0-a984-4f3f-a134-66682b76ffc2/d6dx289-ebe7edf2-f46d-4c74-802c-a9b5b775c87f.png' }} /> */}
         <View style={styles.containerView}>
           <SwiperImg storiesHot={this.props.storiesHot} />
           {/* <SlideshowTest storiesHot={this.props.storiesHot} /> */}
@@ -93,6 +92,7 @@ class Home extends Component {
             </TouchableOpacity>
           </View>
         </View>
+
         {this.props.stories.length !== 0 ? (
           <View>
             <View>

@@ -166,8 +166,6 @@ const styles = StyleSheet.create({
     },
     container2: {
         width: 80,
-        // display: 'flex',
-        // flexDirection: 'column',
     },
     TextStyle: {
         alignItems: 'center',
