@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { Component } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 class StoryItemChiTiet extends Component {
-
     render() {
         const { name, story, onPressXayDung } = this.props;
         return (
             <TouchableOpacity onPress={onPressXayDung}>
                 <View style={styles.container}>
-                    <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
+                    <Image
+                        style={styles.ImageStyle}
+                        source={{ uri: story.path_image }}
+                    />
                     <View>
-                        <Text style={styles.TextStyle}>Tên:
+                        <Text style={styles.TextStyle}>
+                            Tên:
                             <View style={styles.viewInfor}>
                                 <Text style={styles.textInfor}>{name}</Text>
                             </View>
                         </Text>
                         {/* <Text style={styles.TextStyle}>Thể loại : {story.type}</Text> */}
-                        <Text style={styles.TextStyle}>Lượt xem:
-                        <View style={styles.viewInfor}>
-                                <Text style={styles.textInfor}>{story.view}</Text>
+                        <Text style={styles.TextStyle}>
+                            Lượt xem:
+                            <View style={styles.viewInfor}>
+                                <Text style={styles.textInfor}>
+                                    {story.view}
+                                </Text>
                             </View>
                         </Text>
-                        <Text style={styles.TextStyle}>Theo dõi:
+                        <Text style={styles.TextStyle}>
+                            Theo dõi:
                             <View style={styles.viewInfor}>
-                                <Text style={styles.textInfor}>{story.follow}</Text>
+                                <Text style={styles.textInfor}>
+                                    {story.follow}
+                                </Text>
                             </View>
                         </Text>
                     </View>
@@ -35,29 +44,30 @@ class StoryItemChiTiet extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: "white",
         marginBottom: 10,
-        flexDirection: 'row',
-        elevation: 1
-    },
-    TextStyle: {
-        alignItems: 'center',
-        color: 'black',
-        marginTop: 10,
-        marginLeft: 5,
+        flexDirection: "row",
+        elevation: 1,
     },
     ImageStyle: {
         width: 90,
         height: 120,
         borderWidth: 1,
-        borderColor: '#ccc'
+        borderColor: "#ccc",
+    },
+    TextStyle: {
+        color: "black",
+        marginVertical: 10,
+        marginHorizontal: 10,
     },
     viewInfor: {
-        borderRadius: 10,
-        backgroundColor: '#ccc',
-        paddingHorizontal: 8,
-        marginLeft: 5,
-
-    }
+        height: 15,
+    },
+    textInfor: {
+        backgroundColor: "#ccc",
+        borderRadius: 5,
+        paddingHorizontal: 5,
+        marginHorizontal: 10,
+    },
 });
 export default StoryItemChiTiet;

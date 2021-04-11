@@ -1,36 +1,41 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import React, { Component } from 'react';
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Swipeout from 'react-native-swipeout';
-import { connect } from 'react-redux';
-import { actDeleteStoryFollow } from '../actions/follow';
+import AsyncStorage from "@react-native-community/async-storage";
+import React, { Component } from "react";
+import {
+    Alert,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import Swipeout from "react-native-swipeout";
+import { connect } from "react-redux";
+import { actDeleteStoryFollow } from "../actions/follow";
 class StoryActionFollow extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            userData: []
-        }
+            userData: [],
+        };
     }
 
     componentDidMount = async () => {
         try {
-            const value = await AsyncStorage.getItem('userLogin');
+            const value = await AsyncStorage.getItem("userLogin");
             if (value !== null) {
-                this.setState({ userData: JSON.parse(value) })
+                this.setState({ userData: JSON.parse(value) });
             } else {
-                this.setState({ userData: [] })
+                this.setState({ userData: [] });
             }
+        } catch (error) {
+            console.log(error);
         }
-        catch (error) {
-            console.log(error)
-        }
-    }
+    };
 
     UnfollowClick = (story_id) => {
         var user_id = this.state.userData.id;
         this.props.unfollowStory(user_id, story_id);
-    }
+    };
 
     render() {
         const { name, story, onPressXayDung, index } = this.props;
@@ -44,56 +49,88 @@ class StoryActionFollow extends Component {
                 }
             },
             onOpen: (secId, rowId, direction) => {
-                this.setState({ activeRowKey: story.id })
+                this.setState({ activeRowKey: story.id });
             },
             right: [
                 {
                     onPress: () => {
                         Alert.alert(
-                            'Alert',
-                            'Bạn có muốn bỏ theo dõi?',
+                            "Alert",
+                            "Bạn có muốn bỏ theo dõi?",
                             [
-                                { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                                 {
-                                    text: 'Yes', onPress: async () => {
-                                        this.UnfollowClick(story.id)
-                                    }
-                                }
+                                    text: "No",
+                                    onPress: () =>
+                                        console.log("Cancel Pressed"),
+                                    style: "cancel",
+                                },
+                                {
+                                    text: "Yes",
+                                    onPress: async () => {
+                                        this.UnfollowClick(story.id);
+                                    },
+                                },
                             ],
                             { cancelable: true }
-                        )
-
+                        );
                     },
-                    text: 'Delete', type: 'delete'
-                }
+                    text: "Delete",
+                    type: "delete",
+                },
             ],
             rowId: index,
-            sectionId: 1
-        }
+            sectionId: 1,
+        };
         return (
             <Swipeout {...swipeSettings} style={styles.SwipeOut}>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginHorizontal: 5,
-                    borderColor: 'black',
-                    backgroundColor: 'white',
-                    shadowColor: '#000',
-                    shadowOpacity: 0.3,
-                    shadowRadius: 10,
-                    shadowOffset: { width: 0, height: 0 },
-                    marginVertical: 16,
-                    elevation: 1,
-                }}>
+                <View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginHorizontal: 5,
+                        borderColor: "black",
+                        backgroundColor: "white",
+                        shadowColor: "#000",
+                        shadowOpacity: 0.3,
+                        shadowRadius: 10,
+                        shadowOffset: { width: 0, height: 0 },
+                        marginVertical: 16,
+                        elevation: 1,
+                    }}
+                >
                     <View style={styles.container1}>
                         <TouchableOpacity onPress={onPressXayDung}>
                             <View style={styles.StoryItemInfor}>
-                                <Image style={styles.ImageStyle} source={{ uri: story.path_image }} />
+                                <Image
+                                    style={styles.ImageStyle}
+                                    source={{ uri: story.path_image }}
+                                />
                                 <View>
-                                    <Text style={styles.TextStyle}>Tên: <Text style={styles.textInfor}>{name}</Text></Text>
-                                    {/* <Text style={styles.TextStyle}>Thể loại : {story.type}</Text> */}
-                                    <Text style={styles.TextStyle}>Lượt xem: <Text style={styles.textInfor}>{story.view}</Text></Text>
-                                    <Text style={styles.TextStyle}>Theo dõi: <Text style={styles.textInfor}>{story.follow}</Text></Text>
+                                    
+                                    <Text style={styles.TextStyle}>
+                                        Tên:
+                                        <View style={styles.viewInfor}>
+                                            <Text style={styles.textInfor}>
+                                                {name}
+                                            </Text>
+                                        </View>
+                                    </Text>
+                                    <Text style={styles.TextStyle}>
+                                        Lượt xem:
+                                        <View style={styles.viewInfor}>
+                                            <Text style={styles.textInfor}>
+                                                {story.view}
+                                            </Text>
+                                        </View>
+                                    </Text>
+                                    <Text style={styles.TextStyle}>
+                                        Theo dõi:
+                                        <View style={styles.viewInfor}>
+                                            <Text style={styles.textInfor}>
+                                                {story.follow}
+                                            </Text>
+                                        </View>
+                                    </Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -132,53 +169,54 @@ class StoryActionFollow extends Component {
 
 const styles = StyleSheet.create({
     container1: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         width: 270,
     },
     container2: {
         width: 80,
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    TextStyle: {
-        alignItems: 'center',
-        color: 'black',
-        marginBottom: 10,
-        marginTop: 5,
-        marginLeft: 5,
-
+        display: "flex",
+        flexDirection: "column",
     },
     ImageStyle: {
         width: 90,
         height: 120,
         borderWidth: 1,
-        borderColor: '#ccc'
-    },
-    textInfor: {
-        backgroundColor: 'rgb(208, 208, 214)',
-        borderRadius: 8,
-        marginLeft: 1,
+        borderColor: "#ccc",
     },
     StoryItemInfor: {
-        display: 'flex',
-        flexDirection: 'row'
+        display: "flex",
+        flexDirection: "row",
     },
     textAction: {
-        color: 'white',
-        marginVertical: 20
+        color: "white",
+        marginVertical: 20,
     },
     SwipeOut: {
-        backgroundColor: 'white',
-        borderColor: '#ccc',
-        borderTopWidth: 1
-    }
+        backgroundColor: "white",
+        borderColor: "#ccc",
+        borderTopWidth: 1,
+    },
+    TextStyle: {
+        color: "black",
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+    viewInfor: {
+        height: 15,
+    },
+    textInfor: {
+        backgroundColor: "#ccc",
+        borderRadius: 5,
+        paddingHorizontal: 5,
+        marginHorizontal: 10,
+    },
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
         unfollowStory: (user_id, story_id) => {
-            dispatch(actDeleteStoryFollow(user_id, story_id))
-        }
-    }
-}
+            dispatch(actDeleteStoryFollow(user_id, story_id));
+        },
+    };
+};
 export default connect(null, mapDispatchToProps)(StoryActionFollow);
